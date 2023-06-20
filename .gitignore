@@ -35,3 +35,5 @@ line_reminder-*.tar
 npm-debug.log
 /assets/node_modules/
 
+/rel/
+/lib/line_reminder/release.ex
