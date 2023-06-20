@@ -24,7 +24,7 @@ jobs:
     # Additional services can be defined here if required.
     services:
       db:
-        image: postgres:12
+        image: postgres:14
         ports: ['5432:5432']
         env:
           POSTGRES_PASSWORD: postgres
@@ -40,8 +40,8 @@ jobs:
       # Specify the OTP and Elixir versions to use when building
       # and running the workflow steps.
       matrix:
-        otp: ['25.3.2.2']       # Define the OTP version [required]
-        elixir: ['1.14.3-otp-25']    # Define the elixir version [required]
+        otp: ['25.1.2.1']       # Define the OTP version [required]
+        elixir: ['1.14.3']    # Define the elixir version [required]
     steps:
     # Step: Setup Elixir + Erlang image as the base.
     - name: Set up Elixir
@@ -80,6 +80,19 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-mix-${{ env.cache-name }}-
           ${{ runner.os }}-mix-
+
+    # Step: Conditionally bust the cache when job is re-run.
+    # Sometimes, we may have issues with incremental builds that are fixed by
+    # doing a full recompile. In order to not waste dev time on such trivial
+    # issues (while also reaping the time savings of incremental builds for
+    # *most* day-to-day development), force a full recompile only on builds
+    # that are retried.
+    - name: Clean to rule out incremental build as a source of flakiness
+      if: github.run_attempt != '1'
+      run: |
+        mix deps.clean --all
+        mix clean
+      shell: sh
 
     # Step: Download project dependencies. If unchanged, uses
     # the cached version.
