@@ -38,6 +38,20 @@ defmodule LineReminder.Reminders do
   def get_event!(id), do: Repo.get!(Event, id)
 
   @doc """
+  Get event by date
+
+  ## Examples
+  %Event{}
+
+  iex> get_event_by_date(~D[1970-01-01])
+  nil
+  """
+  def get_event_by_date(date) do
+    query = from e in Event, where: e.date == ^date
+    Repo.one(query)
+  end
+
+  @doc """
   Creates a event.
 
   ## Examples
