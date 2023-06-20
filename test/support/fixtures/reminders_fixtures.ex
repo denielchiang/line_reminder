@@ -13,7 +13,7 @@ defmodule LineReminder.RemindersFixtures do
       |> Enum.into(%{
         date: ~D[2023-06-18],
         name: "some name",
-        satus: "some satus"
+        status: "some satus"
       })
       |> LineReminder.Reminders.create_event()
 

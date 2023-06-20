@@ -21,12 +21,12 @@ defmodule LineReminder.RemindersTest do
     end
 
     test "create_event/1 with valid data creates a event" do
-      valid_attrs = %{date: ~D[2023-06-18], name: "some name", satus: "some satus"}
+      valid_attrs = %{date: ~D[2023-06-18], name: "some name", status: "some satus"}
 
       assert {:ok, %Event{} = event} = Reminders.create_event(valid_attrs)
       assert event.date == ~D[2023-06-18]
       assert event.name == "some name"
-      assert event.satus == "some satus"
+      assert event.status == "some satus"
     end
 
     test "create_event/1 with invalid data returns error changeset" do
@@ -39,13 +39,13 @@ defmodule LineReminder.RemindersTest do
       update_attrs = %{
         date: ~D[2023-06-19],
         name: "some updated name",
-        satus: "some updated satus"
+        status: "some updated status"
       }
 
       assert {:ok, %Event{} = event} = Reminders.update_event(event, update_attrs)
       assert event.date == ~D[2023-06-19]
       assert event.name == "some updated name"
-      assert event.satus == "some updated satus"
+      assert event.status == "some updated status"
     end
 
     test "update_event/2 with invalid data returns error changeset" do

@@ -67,7 +67,6 @@ defmodule LineReminder.Reminders do
     %Event{}
     |> Event.changeset(attrs)
     |> Repo.insert()
-    |> dbg
   end
 
   @doc """
