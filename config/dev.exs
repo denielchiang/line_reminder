@@ -74,3 +74,14 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Only for testing on local, comment this after testing
+# config :line_reminder, LineReminder.Scheduler,
+#  jobs: [
+#    {"*/1 * * * *", {LineReminder.Messanger, :send, []}}
+#  ]
+
+# To avoid breaks when running without file "config/dev.secret.exs"
+if File.exists?("config/dev.secret.exs") do
+  import_config "dev.secret.exs"
+end

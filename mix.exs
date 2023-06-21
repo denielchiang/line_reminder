@@ -48,7 +48,11 @@ defmodule LineReminder.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:tzdata, "~> 1.1"},
+      {:quantum, "~> 3.0"},
+      {:heroicons, "~> 0.5.0"},
+      {:req, "~> 0.3.0"}
     ]
   end
 

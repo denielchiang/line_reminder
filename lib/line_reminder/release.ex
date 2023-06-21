@@ -25,4 +25,17 @@ defmodule LineReminder.Release do
   defp load_app do
     Application.load(@app)
   end
+
+  def seeds do
+    Application.load(@app)
+
+    {:ok, _, _} =
+      Ecto.Migrator.with_repo(LineReminder.Repo, fn _repo ->
+        Code.eval_file(seeds_path())
+      end)
+  end
+
+  defp seeds_path do
+    Path.join(:code.priv_dir(@app), "repo/seeds.exs")
+  end
 end

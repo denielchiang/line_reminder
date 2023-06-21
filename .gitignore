@@ -37,3 +37,4 @@ npm-debug.log
 
 /rel/
 /lib/line_reminder/release.ex
+**/*.secret.exs
