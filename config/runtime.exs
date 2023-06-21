@@ -63,6 +63,9 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :line_reminder,
+    line_token: System.get_env("LINE_TOKEN")
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key
