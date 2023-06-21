@@ -5,6 +5,7 @@ defmodule LineReminderWeb.CalendarComponent do
   use Phoenix.LiveComponent
 
   alias LineReminder.Reminders
+  alias LineReminder.DateHelpers
 
   @week_start_at :monday
 
@@ -126,7 +127,7 @@ defmodule LineReminderWeb.CalendarComponent do
   end
 
   def mount(socket) do
-    current_date = Date.utc_today()
+    current_date = DateHelpers.taiwan_today()
 
     assigns = [
       current_date: current_date,
@@ -190,7 +191,7 @@ defmodule LineReminderWeb.CalendarComponent do
 
   defp selected_date?(day, selected_date), do: day == selected_date
 
-  defp today?(day), do: day == Date.utc_today()
+  defp today?(day), do: day == DateHelpers.taiwan_today()
 
   defp other_month?(day, current_date),
     do: Date.beginning_of_month(day) != Date.beginning_of_month(current_date)

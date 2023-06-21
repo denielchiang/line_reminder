@@ -115,4 +115,7 @@ defmodule LineReminder.Reminders do
   def change_event(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
   end
+
+  @event_status_sent "sent"
+  def event_status_sent(), do: @event_status_sent
 end
