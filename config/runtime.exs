@@ -66,6 +66,11 @@ if config_env() == :prod do
   config :line_reminder,
     line_token: System.get_env("LINE_TOKEN")
 
+  config :line_reminder, LineReminder.Scheduler,
+    jobs: [
+      {"@daily", {LineReminder.Messanger, :send, []}, state: :active}
+    ]
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key

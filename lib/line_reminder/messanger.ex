@@ -21,6 +21,7 @@ defmodule LineReminder.Messanger do
     |> Reminders.get_event_by_date()
     |> List.wrap()
     |> Enum.reject(fn event -> event.status == @status_sent end)
+    |> List.first()
     |> send_to_line()
   end
 
