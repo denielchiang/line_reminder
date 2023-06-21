@@ -109,13 +109,23 @@ defmodule LineReminderWeb.CalendarComponent do
                 <%= if day.event do %>
                   <div class="flex flex-col h-10 w-full  overflow-hidden">
                     <div class="bottom flex-grow h-10 py-1 w-full cursor-pointer">
-                      <div class="event bg-cyan-400 text-white rounded text-sm mb-1">
+                      <div class={[
+                        "bg-cyan-400",
+                        sent?(day.event.status) && "bg-cyan-800",
+                        "event text-white rounded text-sm mb-1"
+                      ]}>
                         <span class="event-name">
                           <%= day.event.name %>
                         </span>
                       </div>
                     </div>
                   </div>
+
+                  <%= if sent?(day.event.status) do %>
+                    <span class="align-middle flex justify-center">
+                      <Heroicons.check_circle class="w-10 h-10 text-red-700" />
+                    </span>
+                  <% end %>
                 <% end %>
               </td>
             </tr>
@@ -195,4 +205,7 @@ defmodule LineReminderWeb.CalendarComponent do
 
   defp other_month?(day, current_date),
     do: Date.beginning_of_month(day) != Date.beginning_of_month(current_date)
+
+  defp sent?(status) when status == "sent", do: true
+  defp sent?(_), do: false
 end

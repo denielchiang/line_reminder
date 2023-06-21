@@ -51,6 +51,7 @@ defmodule LineReminder.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:tzdata, "~> 1.1"},
       {:quantum, "~> 3.0"},
+      {:heroicons, "~> 0.5.0"},
       {:req, "~> 0.3.0"}
     ]
   end
