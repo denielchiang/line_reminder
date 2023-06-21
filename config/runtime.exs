@@ -68,7 +68,7 @@ if config_env() == :prod do
 
   config :line_reminder, LineReminder.Scheduler,
     jobs: [
-      {"@daily", {LineReminder.Messanger, :send, []}, state: :active}
+      {"0 0 * * *", {LineReminder.Messanger, :send, []}}
     ]
 
   # ## SSL Support
