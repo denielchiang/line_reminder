@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]  # adapt branch for project
   pull_request:
-    types: [opened, synchronize]
+    branches: [ "main" ]  # adapt branch for project
 
 env:
   MIX_ENV: test
