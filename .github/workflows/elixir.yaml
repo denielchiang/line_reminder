@@ -1,4 +1,4 @@
-name: Elixir CI
+name: Testing
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  elixir_ci:
     services:
       db:
         image: postgres:15.3
@@ -80,6 +80,12 @@ jobs:
 
     - name: Check Formatting
       run: mix format --check-formatted
+
+    - name: Check Code Consistency
+      run: mix credo
+
+    - name: Check Security
+      run: mix sobelow --config
 
     - name: Run tests
       run: mix test
