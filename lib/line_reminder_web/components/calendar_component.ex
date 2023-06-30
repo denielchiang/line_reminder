@@ -7,7 +7,7 @@ defmodule LineReminderWeb.CalendarComponent do
   alias LineReminder.Reminders
   alias LineReminder.DateHelpers
 
-  @week_start_at :monday
+  @week_start_at :sunday
 
   def render(assigns) do
     ~H"""
