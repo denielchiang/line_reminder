@@ -40,3 +40,5 @@ npm-debug.log
 **/*.secret.exs
 /priv/static/
 /bin/
+/priv/plts/*.plt
+/priv/plts/*.plt.hash

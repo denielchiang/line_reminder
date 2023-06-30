@@ -2,9 +2,11 @@ name: Testing
 
 on:
   push:
-    branches: [ "main" ]  # adapt branch for project
+    branches:
+      - '*' # adapt branch for project
   pull_request:
-    branches: [ "main" ]  # adapt branch for project
+    branches:
+      - main # adapt branch for project
 
 env:
   MIX_ENV: test
@@ -42,28 +44,37 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Cache deps
-      id: cache-deps
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-elixir-deps
-      with:
-        path: deps
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
+    - name: Install dependencies
+      run: mix deps.get
 
-    - name: Cache compiled build
-      id: cache-build
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-compiled-build
+    - name: Compiles without warnings
+      run: mix compile --warnings-as-errors
+
+    - name: Restore PLT cache
+      uses: actions/cache/restore@v3
+      id: plt_cache
       with:
-        path: _build
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+        key: |
+          ${{ runner.os }}-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-plt
         restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
-          ${{ runner.os }}-mix-
+          ${{ runner.os }}-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-plt
+        path: |
+          priv/plts
+
+    - name: Create PLTs
+      if: steps.plt_cache.outputs.cache-hit != 'true'
+      run: mix dialyzer --plt
+        
+    - name: Save PLT cache
+      uses: actions/cache/save@v3
+      if: steps.plt_cache.outputs.cache-hit != 'true'
+      id: plt_cache_save
+      with:
+        key: |
+          ${{ runner.os }}-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-plt
+        path: |
+          priv/plts
+
 
     - name: Clean to rule out incremental build as a source of flakiness
       if: github.run_attempt != '1'
@@ -72,14 +83,12 @@ jobs:
         mix clean
       shell: sh
 
-    - name: Install dependencies
-      run: mix deps.get
-
-    - name: Compiles without warnings
-      run: mix compile --warnings-as-errors
 
     - name: Check Formatting
       run: mix format --check-formatted
+
+    - name: Run dialyzer
+      run: mix dialyzer --format GitHub
 
     - name: Check Code Consistency
       run: mix credo
