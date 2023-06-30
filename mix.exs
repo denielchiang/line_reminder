@@ -11,7 +11,8 @@ defmodule LineReminder.MixProject do
       aliases: aliases(),
       deps: deps(),
       dialyzer: [
-        plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
+        plt_add_apps: [:ex_unit, :mix, :fun_with_flags, :fun_with_flags_ui]
       ]
     ]
   end
