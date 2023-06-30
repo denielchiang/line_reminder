@@ -2,9 +2,11 @@ name: Testing
 
 on:
   push:
-    branches: [ "main" ]  # adapt branch for project
+    branches:
+      - main # adapt branch for project
   pull_request:
-    branches: [ "main" ]  # adapt branch for project
+    branches:
+      - '*' # adapt branch for project
 
 env:
   MIX_ENV: test
