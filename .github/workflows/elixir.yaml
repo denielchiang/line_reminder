@@ -81,6 +81,12 @@ jobs:
     - name: Check Formatting
       run: mix format --check-formatted
 
+    - name: Check Code Consistency
+      run: mix credo
+
+    - name: Check Security
+      run: mix sobelow --config
+
     - name: Run tests
       run: mix test
 

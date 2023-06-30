@@ -8,6 +8,7 @@ defmodule LineReminderWeb.Router do
     plug :put_root_layout, {LineReminderWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug LineReminderWeb.CSPHeader
   end
 
   pipeline :api do

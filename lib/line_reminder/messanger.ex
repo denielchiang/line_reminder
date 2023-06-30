@@ -28,7 +28,7 @@ defmodule LineReminder.Messanger do
   @skip_msg "Today has no more topic to send"
   @success_msg "Topic already be sent"
   @error_msg "Message sent failed"
-  defp send_to_line(event) when is_nil(event) or length(event) == 0, do: Logger.info(@skip_msg)
+  defp send_to_line(event) when is_nil(event) or event == [], do: Logger.info(@skip_msg)
 
   defp send_to_line(%{name: reading_topic} = event) do
     with {:ok, msg} <- make_complete_sentence(reading_topic),
