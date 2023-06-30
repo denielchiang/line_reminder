@@ -44,11 +44,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: mix deps.get
-
-    - name: Compiles without warnings
-      run: mix compile --warnings-as-errors
 
     - name: Restore PLT cache
       uses: actions/cache/restore@v3
@@ -60,6 +55,19 @@ jobs:
           ${{ runner.os }}-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-plt
         path: |
           priv/plts
+    
+    - name: Clean to rule out incremental build as a source of flakiness
+      if: github.run_attempt != '1'
+      run: |
+        mix deps.clean --all
+        mix clean
+      shell: sh
+
+    - name: Install dependencies
+      run: mix deps.get
+
+    - name: Compiles without warnings
+      run: mix compile --warnings-as-errors
 
     - name: Create PLTs
       if: steps.plt_cache.outputs.cache-hit != 'true'
@@ -74,15 +82,6 @@ jobs:
           ${{ runner.os }}-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-plt
         path: |
           priv/plts
-
-
-    - name: Clean to rule out incremental build as a source of flakiness
-      if: github.run_attempt != '1'
-      run: |
-        mix deps.clean --all
-        mix clean
-      shell: sh
-
 
     - name: Check Formatting
       run: mix format --check-formatted
