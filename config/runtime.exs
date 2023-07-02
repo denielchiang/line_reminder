@@ -69,7 +69,7 @@ if config_env() == :prod do
   config :line_reminder, LineReminder.Scheduler,
     timezone: "Asia/Taipei",
     jobs: [
-      {"0 1 * * *", {LineReminder.Messanger, :send, []}}
+      {"0 6 * * *", {LineReminder.Messanger, :send, []}}
     ]
 
   # ## SSL Support
