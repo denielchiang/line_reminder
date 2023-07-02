@@ -67,8 +67,9 @@ if config_env() == :prod do
     line_token: System.get_env("LINE_TOKEN")
 
   config :line_reminder, LineReminder.Scheduler,
+    timezone: "Asia/Taipei",
     jobs: [
-      {"0 0 * * *", {LineReminder.Messanger, :send, []}}
+      {"0 1 * * *", {LineReminder.Messanger, :send, []}}
     ]
 
   # ## SSL Support
