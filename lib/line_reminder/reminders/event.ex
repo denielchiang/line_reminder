@@ -10,7 +10,7 @@ defmodule LineReminder.Reminders.Event do
   schema "events" do
     field :date, :date
     field :name, :string
-    # "set" -> "sent"
+    # statuf from "set" -> "sent"
     field :status, :string
 
     timestamps()
