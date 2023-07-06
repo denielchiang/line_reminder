@@ -69,6 +69,7 @@ if config_env() == :prod do
   config :line_reminder, LineReminder.Scheduler,
     timezone: "Asia/Taipei",
     overlap: false,
+    run_strategy: Quantum.RunStrategy.Local,
     jobs: [
       {"0 6 * * *", {LineReminder.Messanger, :send, []}}
     ]
