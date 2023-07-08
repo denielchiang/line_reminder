@@ -56,6 +56,7 @@ defmodule LineReminder.MixProject do
       {:sobelow, "~> 0.12", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false},
       {:tzdata, "~> 1.1"},
+      {:highlander, "~> 0.2.1"},
       {:quantum, "~> 3.0"},
       {:heroicons, "~> 0.5.0"},
       {:req, "~> 0.3.0"}
