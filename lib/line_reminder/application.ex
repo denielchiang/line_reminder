@@ -17,7 +17,7 @@ defmodule LineReminder.Application do
       # Start the Endpoint (http/https)
       LineReminderWeb.Endpoint,
       # Scheduled tasks
-      LineReminder.Scheduler
+      {Highlander, LineReminder.Scheduler}
       # Start a worker by calling: LineReminder.Worker.start_link(arg)
       # {LineReminder.Worker, arg}
     ]
