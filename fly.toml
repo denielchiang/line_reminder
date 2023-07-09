@@ -13,6 +13,7 @@ kill_signal = "SIGTERM"
 [env]
   PHX_HOST = "bible-reminder.fly.dev"
   PORT = "8080"
+  RELEASE_COOKIE = "qMbJvklAbHX3HH_EPwIex6ucf2pRvk7qmXecc5SfJizTM9ertY4vcA=="
 
 [http_service]
   internal_port = 8080
