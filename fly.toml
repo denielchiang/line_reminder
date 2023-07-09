@@ -7,8 +7,8 @@ app = "bible-reminder"
 primary_region = "sin"
 kill_signal = "SIGTERM"
 
-[deploy]
-  release_command = "/app/bin/migrate"
+#[deploy]
+  # release_command = "/app/bin/migrate"
 
 [env]
   PHX_HOST = "bible-reminder.fly.dev"
