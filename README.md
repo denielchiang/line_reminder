@@ -1,4 +1,5 @@
 # LineReminder
+[![Run Tests](https://github.com/denielchiang/line_reminder/actions/workflows/elixir.yaml/badge.svg)](https://github.com/denielchiang/line_reminder/actions/workflows/elixir.yaml) [![Fly Deploy](https://github.com/denielchiang/line_reminder/actions/workflows/fly.yaml/badge.svg)](https://github.com/denielchiang/line_reminder/actions/workflows/fly.yaml)
 
 A calendar website that be able to send Line message when the schedule job be triggered.
 
