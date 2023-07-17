@@ -5,8 +5,8 @@ A calendar website that be able to send Line message when the schedule job be tr
 
 ## Prereq
 
-  - Erlang 25.1
-  - Elixir 1.14.3-otp-25
+  - Erlang 26.0.2
+  - Elixir 1.15.3-otp-26
   - Phoenix 1.7.2
   - Phoenix LiveView 0.18.16
   - PostgreSQL 15.3
