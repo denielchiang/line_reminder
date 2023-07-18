@@ -32,7 +32,7 @@ defmodule LineReminder.Line do
       {:error, _others} -> {:error, "connection failure happen"}
     end)
     ~> then(fn
-      ok -> "Topic already be sent"
+      "ok" -> "Topic already be sent"
       other_body_message -> other_body_message
     end)
   end
