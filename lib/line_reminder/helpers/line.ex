@@ -8,7 +8,10 @@ defmodule LineReminder.Line do
   ## Examples
 
   iex> send_to_group("abc")
-  {:ok, message}
+  {:ok, Topic already be sent}
+
+  iex> send_to_group("abcdef")
+  {:error, reason}
   """
   @spec send_to_group(String.t()) :: {:ok, String.t()} | {:error, String.t()}
   def send_to_group(msg) do
@@ -20,13 +23,12 @@ defmodule LineReminder.Line do
     |> Req.new()
     |> Req.post(form: [message: msg])
     |> then(fn
-      {:ok, %Req.Response{body: body, status: 200}} -> {:ok, body["message"]}
-      {:ok, %Req.Response{body: body}} -> {:error, body["message"]}
+      {:ok, %Req.Response{body: body, status: 200}} -> {:ok, handle_body_message(body["message"])}
+      {:ok, %Req.Response{body: body}} -> {:error, handle_body_message(body["message"])}
       {:error, _others} -> {:error, "connection failure happen"}
     end)
-    |> then(fn
-      {:ok, "ok"} -> {:ok, "Topic already be sent"}
-      {:error, reason} -> {:error, reason}
-    end)
   end
+
+  defp handle_body_message("ok"), do: "Topic already be sent"
+  defp handle_body_message(message), do: message
 end
