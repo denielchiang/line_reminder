@@ -2,6 +2,8 @@ defmodule LineReminder.Line do
   @moduledoc """
   Line http client wrapper
   """
+  import OK, only: [~>: 2]
+
   @doc """
   Send passing message to particular line group
 
@@ -23,12 +25,15 @@ defmodule LineReminder.Line do
     |> Req.new()
     |> Req.post(form: [message: msg])
     |> then(fn
-      {:ok, %Req.Response{body: body, status: 200}} -> {:ok, handle_body_message(body["message"])}
-      {:ok, %Req.Response{body: body}} -> {:error, handle_body_message(body["message"])}
+      # status 200
+      {:ok, %Req.Response{body: body, status: 200}} -> {:ok, body["message"]}
+      # status 400, 401, 500, Other
+      {:ok, %Req.Response{body: body}} -> {:error, body["message"]}
       {:error, _others} -> {:error, "connection failure happen"}
     end)
+    ~> then(fn
+      ok -> "Topic already be sent"
+      other_body_message -> other_body_message
+    end)
   end
-
-  defp handle_body_message("ok"), do: "Topic already be sent"
-  defp handle_body_message(message), do: message
 end
