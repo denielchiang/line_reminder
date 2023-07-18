@@ -18,10 +18,15 @@ defmodule LineReminder.Line do
       auth: {:bearer, Application.fetch_env!(:line_reminder, :line_token)}
     ]
     |> Req.new()
-    |> then(&Req.post!(&1, form: [message: msg]).body["message"])
-    |> handle_resp()
+    |> Req.post(form: [message: msg])
+    |> then(fn
+      {:ok, %Req.Response{body: body, status: 200}} -> {:ok, body["message"]}
+      {:ok, %Req.Response{body: body}} -> {:error, body["message"]}
+      {:error, _others} -> {:error, "connection failure happen"}
+    end)
+    |> then(fn
+      {:ok, "ok"} -> {:ok, "Topic already be sent"}
+      {:error, reason} -> {:error, reason}
+    end)
   end
-
-  defp handle_resp("ok"), do: {:ok, "Topic already be sent"}
-  defp handle_resp(message), do: {:error, message}
 end
