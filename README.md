@@ -59,6 +59,7 @@ Dependencies that using
 - [req](https://github.com/wojtekmach/req)
 - [highlander](https://hexdocs.pm/highlander/Highlander.html#content)
 - [libcluster](https://github.com/bitwalker/libcluster)
+- [ok](https://hexdocs.pm/ok/readme.html)
  
 ### Deployment
 It's using [fly.io](https://fly.io) for my own convenience to save my infrastructure time & personal study. Feel free to change whatever you like if you wanna create your own scheduling Line Notifier, it has nothing to do with the deploymnet section.
