@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "line-reminder-muddy-bird-4616-solitary-river-6269"
+app = "line-reminder"
 primary_region = "hkg"
 kill_signal = "SIGTERM"
 
