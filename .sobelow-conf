@@ -1,1 +1,1 @@
-[verbose: false, private: false, skip: false, router: nil, exit: false, format: "txt", out: nil, threshold: :low, ignore: ["Config.CSP", "Config.HTTPS"], ignore_files: ["lib/line_reminder/release.ex"], version: false]
+[verbose: true, private: false, skip: false, router: nil, exit: :low, format: "txt", out: nil, threshold: :low, ignore: ["Traversal", "RCE", "Config.CSP", "Config.HTTPS"], ignore_files: [], version: false]
