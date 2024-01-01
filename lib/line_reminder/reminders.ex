@@ -118,4 +118,10 @@ defmodule LineReminder.Reminders do
 
   @event_status_sent "sent"
   def event_status_sent(), do: @event_status_sent
+
+  def has_events_with_2024? do
+    query = from e in Event, where: fragment("?::date >= ?", e.date, ^~D[2024-01-01])
+
+    Repo.exists?(query)
+  end
 end
