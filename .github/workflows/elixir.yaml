@@ -44,7 +44,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-
     - name: Restore PLT cache
       uses: actions/cache/restore@v3
       id: plt_cache
@@ -54,7 +53,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-plt
         path: |
-          priv/plts
+          priv/plts_new
     
     - name: Clean to rule out incremental build as a source of flakiness
       if: github.run_attempt != '1'

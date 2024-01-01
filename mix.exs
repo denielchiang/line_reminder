@@ -9,6 +9,7 @@ defmodule LineReminder.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
+      compilers: [:leex] ++ Mix.compilers(),
       deps: deps(),
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
