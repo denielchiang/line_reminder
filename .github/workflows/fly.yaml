@@ -1,4 +1,4 @@
-name: Fly Deploy
+name: Fly Deploy App v2
 on:
   workflow_run:
     workflows: ["Run Tests"]
