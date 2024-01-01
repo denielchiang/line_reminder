@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for bible-reminder-withered-wind-6465-blue-breeze-9155 on 2024-01-01T15:06:05+08:00
+# fly.toml app configuration file generated for line-reminder-muddy-bird-4616-solitary-river-6269 on 2024-01-01T16:38:53+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "bible-reminder-withered-wind-6465-blue-breeze-9155"
-primary_region = "sin"
+app = "line-reminder-muddy-bird-4616-solitary-river-6269"
+primary_region = "hkg"
 kill_signal = "SIGTERM"
 
 [build]
@@ -13,14 +13,13 @@ kill_signal = "SIGTERM"
   release_command = "/app/bin/migrate"
 
 [env]
-  PHX_HOST = "bible-reminder-withered-wind-6465-blue-breeze-9155.fly.dev"
+  PHX_HOST = "line-reminder-muddy-bird-4616-solitary-river-6269.fly.dev"
   PORT = "8080"
-  RELEASE_COOKIE = "qMbJvklAbHX3HH_EPwIex6ucf2pRvk7qmXecc5SfJizTM9ertY4vcA=="
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = false
+  auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
   processes = ["app"]
