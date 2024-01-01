@@ -14,9 +14,15 @@ alias LineReminder.Reminders
 alias LineReminder.Reminders.Event
 alias LineReminder.DataDetailer
 
-unless Reminders.has_events_with_2024? do
-  events = 
-    ["./priv/data/2024_0.txt", "./priv/data/2024_1.txt", "./priv/data/2024_2.txt"]
+unless Reminders.has_events_with_2024?() do
+  data =
+    Enum.map(
+      ["/data/2024_0.txt", "/data/2024_1.txt", "/data/2024_2.txt"],
+      &Path.join(:code.priv_dir(:line_reminder), &1)
+    )
+
+  events =
+    data
     |> Enum.into([], &DataDetailer.transform/1)
     |> List.flatten()
 
