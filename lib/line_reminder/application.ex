@@ -7,9 +7,8 @@ defmodule LineReminder.Application do
 
   @impl true
   def start(_type, _args) do
-    topologies = Application.get_env(:libcluster, :topologies) || []
-
     children = [
+      LineReminder.Scheduler,
       # Start the Telemetry supervisor
       LineReminderWeb.Telemetry,
       # Start the Ecto repository
@@ -17,11 +16,7 @@ defmodule LineReminder.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: LineReminder.PubSub},
       # Start the Endpoint (http/https)
-      LineReminderWeb.Endpoint,
-      # setup for clustering
-      {Cluster.Supervisor, [topologies, [name: LineReminder.ClusterSupervisor]]},
-      # Scheduled tasks
-      {Highlander, LineReminder.Scheduler}
+      LineReminderWeb.Endpoint
       # Start a worker by calling: LineReminder.Worker.start_link(arg)
       # {LineReminder.Worker, arg}
     ]
