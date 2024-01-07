@@ -71,7 +71,7 @@ if config_env() == :prod do
     overlap: false,
     run_strategy: Quantum.RunStrategy.Local,
     jobs: [
-      {"0 6 * * *", {LineReminder.Messanger, :send, []}}
+      {"* 6 * * *", {LineReminder.Messanger, :send, []}}
     ]
 
   # ## SSL Support
