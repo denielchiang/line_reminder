@@ -18,9 +18,15 @@ defmodule LineReminderWeb.Router do
   scope "/", LineReminderWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-
     live "/schedule", ScheduleLive
+    live "/", HomeLive
+  end
+
+  scope "/auth", LineReminderWeb do
+    pipe_through :browser
+
+    get "/line", AuthController, :request
+    get "/line/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.
