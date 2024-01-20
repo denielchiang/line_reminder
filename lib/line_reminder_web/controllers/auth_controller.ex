@@ -4,8 +4,13 @@ defmodule LineReminderWeb.AuthController do
   alias LineReminder.Line
 
   @notify_auth_uri Application.compile_env!(:line_reminder, :line_notify_auth_uri)
+  @notify_auth_token Application.compile_env!(:line_reminder, :line_notify_token_uri)
   @client_id Application.compile_env!(:line_reminder, :client_id)
   @client_secret Application.compile_env!(:line_reminder, :client_secret)
+  @grant_type "authorization_code"
+  @response_type "code"
+  @scope "notify"
+  @headers [{"Content-Type", "application/x-www-form-urlencoded"}]
 
   def request(conn, _params) do
     code_req_uri =
@@ -17,35 +22,33 @@ defmodule LineReminderWeb.AuthController do
 
   def callback(conn, %{"code" => code}) do
     [
-      url: "https://notify-bot.line.me/oauth/token",
-      headers: [{"Content-Type", "application/x-www-form-urlencoded"}]
+      url: @notify_auth_token,
+      headers: @headers
     ]
     |> Req.new()
     |> Req.post(
       form: [
-        grant_type: "authorization_code",
+        grant_type: @grant_type,
         code: code,
         redirect_uri: url(~p"/auth/line/callback"),
         client_id: @client_id,
         client_secret: @client_secret
       ]
     )
-    |> tap(&IO.inspect/1)
     |> then(fn
       {:ok, %Req.Response{body: body, status: 200}} -> {:ok, body["access_token"]}
       {:ok, %Req.Response{body: body}} -> {:error, body["message"]}
       {:error, _others} -> {:error, "some errors"}
     end)
-    |> tap(&IO.inspect/1)
     |> then(fn
       {:ok, token} -> Line.send_to_group("\n您已訂閱一般組讀經進度小幫手🚀", token)
       other_msg -> other_msg
     end)
 
-    redirect(conn, to: "/home")
+    redirect(conn, to: "/")
   end
 
   defp append_code_req(uri) do
-    "#{uri}?response_type=code&client_id=G7Dl2c8gXLWtgtytnVnQFC&scope=notify&state=#{get_csrf_token()}&redirect_uri=#{url(~p"/auth/line/callback")}"
+    "#{uri}?response_type=#{@response_type}&client_id=#{@client_id}&scope=#{@scope}&state=#{get_csrf_token()}&redirect_uri=#{url(~p"/auth/line/callback")}"
   end
 end
