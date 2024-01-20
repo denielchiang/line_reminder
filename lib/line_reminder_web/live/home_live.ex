@@ -1,7 +1,7 @@
 defmodule LineReminderWeb.HomeLive do
   use LineReminderWeb, :live_view
 
-  alias LineReminderWeb.{HeroComponent, QRComponent, HomeComponent}
+  alias LineReminderWeb.{HeroComponent, HomeComponent}
 
   def mount(_params, _session, socket) do
     socket = assign(socket, :count, 10)
