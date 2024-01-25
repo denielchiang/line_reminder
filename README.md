@@ -5,11 +5,11 @@ A calendar website that be able to send Line message when the schedule job be tr
 
 ## Prereq
 
-  - Erlang 26.1
-  - Elixir 1.15.6-otp-26
+  - Erlang 26.2.1
+  - Elixir 1.16,0
   - Phoenix 1.7.10
   - Phoenix LiveView 0.18.16
-  - PostgreSQL 15.3
+  - PostgreSQL 15.3/16.1
   - [Generate](https://notify-bot.line.me/my/) your own Line access token
 
 ## Getting Started
@@ -35,7 +35,7 @@ $ mix run ./priv/repo/seeds.exs
 ### Server
 Seeding on runtime
 ```Elixir
-iex> LineReminder.Release.seeds()
+iex> LineReminder.Release.seeds(2024)
 ```
 
 ### Mix Tasks
