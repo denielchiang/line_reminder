@@ -11,3 +11,8 @@
   color: #fff;
   background-color: #000;
 }
+
+@font-face {
+  font-family: "Comfortaa";
+  src: url("/fonts/Comfortaa-VariableFont_wght.ttf") format("truetype");
+}
