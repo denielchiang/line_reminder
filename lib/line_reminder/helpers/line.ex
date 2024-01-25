@@ -17,10 +17,14 @@ defmodule LineReminder.Line do
   """
   @spec send_to_group(String.t()) :: {:ok, String.t()} | {:error, String.t()}
   def send_to_group(msg) do
+    send_to_group(msg, Application.fetch_env!(:line_reminder, :line_token))
+  end
+
+  def send_to_group(msg, token) do
     [
       url: "https://notify-api.line.me/api/notify",
       headers: [{"Content-Type", "application/x-www-form-urlencoded"}],
-      auth: {:bearer, Application.fetch_env!(:line_reminder, :line_token)}
+      auth: {:bearer, token}
     ]
     |> Req.new()
     |> Req.post(form: [message: msg])

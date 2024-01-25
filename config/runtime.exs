@@ -28,13 +28,13 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
-  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
+  # maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   config :line_reminder, LineReminder.Repo,
-    # ssl: true,
+    ssl: false,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: maybe_ipv6
+    socket_options: [:inet6]
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
@@ -64,7 +64,11 @@ if config_env() == :prod do
     secret_key_base: secret_key_base
 
   config :line_reminder,
-    line_token: System.get_env("LINE_TOKEN")
+    line_token: System.get_env("LINE_TOKEN"),
+    notify_auth_uri: System.get_env("LINE_NOTIFY_AUTH_URI"),
+    notify_auth_token: System.get_env("LINE_NOTIFY_TOKEN_URI"),
+    client_id: System.get_env("CLIENT_ID"),
+    client_secret: System.get_env("CLIENT_SECRET")
 
   config :line_reminder, LineReminder.Scheduler,
     timezone: "Asia/Taipei",

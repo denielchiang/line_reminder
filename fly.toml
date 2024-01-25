@@ -1,20 +1,20 @@
-# fly.toml app configuration file generated for line-reminder on 2024-01-01T17:44:54+08:00
+# fly.toml app configuration file generated for line-reminder-2 on 2024-01-26T01:25:56+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "line-reminder"
-primary_region = "hkg"
-kill_signal = "SIGTERM"
+app = 'line-reminder-2'
+primary_region = 'nrt'
+kill_signal = 'SIGTERM'
 
 [build]
 
 [deploy]
-  release_command = "/app/bin/migrate"
+  release_command = '/app/bin/migrate'
 
 [env]
-  PHX_HOST = "line-reminder.fly.dev"
-  PORT = "8080"
+  PHX_HOST = 'line-reminder-2.fly.dev'
+  PORT = '8080'
 
 [http_service]
   internal_port = 8080
@@ -22,13 +22,14 @@ kill_signal = "SIGTERM"
   auto_stop_machines = false
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
+  processes = ['app']
+
   [http_service.concurrency]
-    type = "connections"
+    type = 'connections'
     hard_limit = 1000
     soft_limit = 1000
 
 [[vm]]
-  cpu_kind = "shared"
+  cpu_kind = 'shared'
   cpus = 1
-  memory_mb = 512
+  memory_mb = 256

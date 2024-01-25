@@ -32,14 +32,14 @@ window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
 window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
 
 // Show orientation forcing
-window.addEventListener("phx:page-loading-start", () => {
-  PleaseRotateOptions = {
-    allowClickBypass: false,
-    subMessage: "",
-  };
-
-  pleaserotate.start(PleaseRotateOptions)
-})
+//window.addEventListener("phx:page-loading-start", () => {
+//  PleaseRotateOptions = {
+//    allowClickBypass: false,
+//    subMessage: "",
+//  };
+//
+//  pleaserotate.start(PleaseRotateOptions)
+//})
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()
