@@ -9,7 +9,7 @@ defmodule LineReminderWeb.AuthController do
   @response_type "code"
   @scope "notify"
   @headers [{"Content-Type", "application/x-www-form-urlencoded"}]
-  
+
   defp notify_auth_uri, do: Application.get_env(:line_reminder, :notify_auth_uri)
   defp notify_auth_token, do: Application.get_env(:line_reminder, :notify_auth_token)
   defp client_id, do: Application.get_env(:line_reminder, :client_id)
