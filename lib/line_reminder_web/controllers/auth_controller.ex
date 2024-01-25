@@ -5,23 +5,19 @@ defmodule LineReminderWeb.AuthController do
 
   require Logger
 
-  @notify_auth_uri Application.fetch_env!(:line_reminder, :notify_auth_uri)
-  @notify_auth_token Application.fetch_env!(:line_reminder, :notify_auth_token)
-  @client_id Application.fetch_env!(:line_reminder, :client_id)
-  @client_secret Application.fetch_env!(:line_reminder, :client_secret)
-
   @grant_type "authorization_code"
   @response_type "code"
   @scope "notify"
   @headers [{"Content-Type", "application/x-www-form-urlencoded"}]
+  
+  defp notify_auth_uri, do: Application.get_env(:line_reminder, :notify_auth_uri)
+  defp notify_auth_token, do: Application.get_env(:line_reminder, :notify_auth_token)
+  defp client_id, do: Application.get_env(:line_reminder, :client_id)
+  defp client_secret, do: Application.get_env(:line_reminder, :client_secret)
 
   def request(conn, _params) do
-    Logger.debug(
-      "notify_auth_uri: #{@notify_auth_uri}\n notify_auth_token: #{@notify_auth_token}\n client_id: #{@client_id}\n client_secret: #{@client_secret}"
-    )
-
     code_req_uri =
-      @notify_auth_uri
+      notify_auth_uri()
       |> append_code_req()
 
     conn |> redirect(external: code_req_uri) |> halt()
@@ -29,7 +25,7 @@ defmodule LineReminderWeb.AuthController do
 
   def callback(conn, %{"code" => code}) do
     [
-      url: @notify_auth_token,
+      url: notify_auth_token(),
       headers: @headers
     ]
     |> Req.new()
@@ -38,8 +34,8 @@ defmodule LineReminderWeb.AuthController do
         grant_type: @grant_type,
         code: code,
         redirect_uri: url(~p"/auth/line/callback"),
-        client_id: @client_id,
-        client_secret: @client_secret
+        client_id: client_id(),
+        client_secret: client_secret()
       ]
     )
     |> tap(&Logger.debug/1)
@@ -57,6 +53,6 @@ defmodule LineReminderWeb.AuthController do
   end
 
   defp append_code_req(uri) do
-    "#{uri}?response_type=#{@response_type}&client_id=#{@client_id}&scope=#{@scope}&state=#{get_csrf_token()}&redirect_uri=#{url(~p"/auth/line/callback")}"
+    "#{uri}?response_type=#{@response_type}&client_id=#{client_id()}&scope=#{@scope}&state=#{get_csrf_token()}&redirect_uri=#{url(~p"/auth/line/callback")}"
   end
 end
