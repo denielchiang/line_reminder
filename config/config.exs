@@ -54,6 +54,13 @@ config :phoenix, :json_library, Jason
 # Use TZ for global setting
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
+config :line_reminder,
+  line_token: System.get_env("LINE_TOKEN"),
+  notify_auth_uri: System.get_env("LINE_NOTIFY_AUTH_URI"),
+  notify_auth_token: System.get_env("LINE_NOTIFY_TOKEN_URI"),
+  client_id: System.get_env("CLIENT_ID"),
+  client_secret: System.get_env("CLIENT_SECRET")
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

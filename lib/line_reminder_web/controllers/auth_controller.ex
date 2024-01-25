@@ -3,16 +3,23 @@ defmodule LineReminderWeb.AuthController do
 
   alias LineReminder.Line
 
-  @notify_auth_uri Application.compile_env!(:line_reminder, :line_notify_auth_uri)
-  @notify_auth_token Application.compile_env!(:line_reminder, :line_notify_token_uri)
-  @client_id Application.compile_env!(:line_reminder, :client_id)
-  @client_secret Application.compile_env!(:line_reminder, :client_secret)
+  require Logger
+
+  @notify_auth_uri Application.fetch_env!(:line_reminder, :notify_auth_uri)
+  @notify_auth_token Application.fetch_env!(:line_reminder, :notify_auth_token)
+  @client_id Application.fetch_env!(:line_reminder, :client_id)
+  @client_secret Application.fetch_env!(:line_reminder, :client_secret)
+
   @grant_type "authorization_code"
   @response_type "code"
   @scope "notify"
   @headers [{"Content-Type", "application/x-www-form-urlencoded"}]
 
   def request(conn, _params) do
+    Logger.debug(
+      "notify_auth_uri: #{@notify_auth_uri}\n notify_auth_token: #{@notify_auth_token}\n client_id: #{@client_id}\n client_secret: #{@client_secret}"
+    )
+
     code_req_uri =
       @notify_auth_uri
       |> append_code_req()
@@ -35,6 +42,7 @@ defmodule LineReminderWeb.AuthController do
         client_secret: @client_secret
       ]
     )
+    |> tap(&Logger.debug/1)
     |> then(fn
       {:ok, %Req.Response{body: body, status: 200}} -> {:ok, body["access_token"]}
       {:ok, %Req.Response{body: body}} -> {:error, body["message"]}

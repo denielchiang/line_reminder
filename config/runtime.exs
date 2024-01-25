@@ -64,7 +64,11 @@ if config_env() == :prod do
     secret_key_base: secret_key_base
 
   config :line_reminder,
-    line_token: System.get_env("LINE_TOKEN")
+    line_token: System.get_env("LINE_TOKEN"),
+    notify_auth_uri: System.get_env("LINE_NOTIFY_AUTH_URI"),
+    notify_auth_token: System.get_env("LINE_NOTIFY_TOKEN_URI"),
+    client_id: System.get_env("CLIENT_ID"),
+    client_secret: System.get_env("CLIENT_SECRET")
 
   config :line_reminder, LineReminder.Scheduler,
     timezone: "Asia/Taipei",
