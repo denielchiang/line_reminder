@@ -38,7 +38,6 @@ defmodule LineReminderWeb.AuthController do
         client_secret: client_secret()
       ]
     )
-    |> tap(&Logger.debug/1)
     |> then(fn
       {:ok, %Req.Response{body: body, status: 200}} -> {:ok, body["access_token"]}
       {:ok, %Req.Response{body: body}} -> {:error, body["message"]}
