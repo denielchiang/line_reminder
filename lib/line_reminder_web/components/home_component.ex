@@ -48,13 +48,13 @@ defmodule LineReminderWeb.HomeComponent do
         <div class="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div class="lg:pr-4">
             <div class="lg:max-w-lg">
-              <p class="text-base font-semibold leading-7 text-indigo-600">
+              <p class="text-base font-semibold leading-7 text-indigo-600 font-comfortaa">
                 <%= gettext("Notify progress") %>
               </p>
-              <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl font-comfortaa">
                 <%= gettext("Introduction to Line Notify Integration") %>
               </h1>
-              <p class="mt-6 text-xl leading-8 text-gray-700">
+              <p class="mt-6 text-xl leading-8 text-gray-700 font-comfortaa">
                 <%= gettext(
                   "Welcome to our platform! To receive timely updates on your Bible reading progress, follow these simple steps using Line Notify:"
                 ) %>
@@ -68,10 +68,10 @@ defmodule LineReminderWeb.HomeComponent do
         <div class="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div class="lg:pr-4">
             <div class="text-center">
-              <p class="mt-4 text-sm leading-7 text-gray-500 font-regular">
+              <p class="mt-4 text-sm leading-7 text-gray-500 font-regular font-comfortaa">
                 <%= gettext("STEPS") %>
               </p>
-              <h3 class="text-3xl sm:text-5xl leading-normal font-extrabold tracking-tight text-gray-900">
+              <h3 class="text-3xl sm:text-5xl leading-normal font-extrabold tracking-tight text-gray-900 font-comfortaa">
                 <%= gettext("How it") %> <span class="text-indigo-600"><%= gettext("Works?") %></span>
               </h3>
             </div>
@@ -80,7 +80,7 @@ defmodule LineReminderWeb.HomeComponent do
                 <li class="text-left mb-10">
                   <div class="flex flex-row items-start">
                     <div class="flex flex-col items-center justify-center mr-5">
-                      <div class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-600 text-white border-4 border-white text-xl font-semibold">
+                      <div class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-600 text-white font-comfortaa border-4 border-white text-xl font-semibold">
                         1
                       </div>
                       <span class="text-gray-500"><%= gettext("STEP") %></span>
@@ -89,7 +89,7 @@ defmodule LineReminderWeb.HomeComponent do
                       <h4 class="text-lg leading-6 font-semibold text-gray-900">
                         <%= gettext("Select Your Notification Group") %>
                       </h4>
-                      <p class="mt-2 text-base leading-6 text-gray-500">
+                      <p class="mt-2 text-base leading-6 text-gray-500 font-comfortaa">
                         <%= gettext(
                           "On the right, you will find three QR codes representing different notification groups. Choose the group you wish to receive updates from."
                         ) %>
@@ -100,12 +100,12 @@ defmodule LineReminderWeb.HomeComponent do
                 <li class="text-left mb-10">
                   <div class="flex flex-row items-start">
                     <div class="flex flex-col items-center justify-center mr-5">
-                      <div class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-600 text-white border-4 border-white text-xl font-semibold">
+                      <div class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-600 text-white font-comfortaa border-4 border-white text-xl font-semibold">
                         2
                       </div>
                       <span class="text-gray-500"><%= gettext("STEP") %></span>
                     </div>
-                    <div class="bg-gray-100 p-5 pb-10 ">
+                    <div class="bg-gray-100 p-5 pb-10 font-comfortaa">
                       <h4 class="text-lg leading-6 font-semibold text-gray-900">
                         <%= gettext("Login to Line and Choose Your Group") %>
                       </h4>
@@ -117,7 +117,7 @@ defmodule LineReminderWeb.HomeComponent do
                     </div>
                   </div>
                 </li>
-                <li class="text-left mb-10">
+                <li class="text-left mb-10 font-comfortaa">
                   <div class="flex flex-row items-start">
                     <div class="flex flex-col items-center justify-center mr-5">
                       <div class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-600 text-white border-4 border-white text-xl font-semibold">
@@ -137,7 +137,7 @@ defmodule LineReminderWeb.HomeComponent do
                     </div>
                   </div>
                 </li>
-                <li class="text-left mb-10">
+                <li class="text-left mb-10 font-comfortaa">
                   <div class="flex flex-row items-start">
                     <div class="flex flex-col items-center justify-center mr-5">
                       <div class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-600 text-white border-4 border-white text-xl font-semibold">
