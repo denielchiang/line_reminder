@@ -6,10 +6,6 @@ defmodule LineReminderWeb.HomeComponent do
 
   import LineReminderWeb.Gettext, only: [gettext: 1]
 
-  def mount(socket, assigns) do
-    {:ok, assign(socket, assigns)}
-  end
-
   def render(assigns) do
     ~H"""
     <div class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
@@ -62,8 +58,42 @@ defmodule LineReminderWeb.HomeComponent do
             </div>
           </div>
         </div>
-        <div class="flex-1 -ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-          <img class="w-full bg-gray-900" src="/images/general.svg" alt="" />
+        <div class="flex-1 -ml-12 -mt-8 p-8 sticky lg:top-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden ">
+          <div class="carousel carousel-center max-w-md p-4 space-x-4 rounded-box">
+            <div class="carousel-item">
+              <div class="mockup-phone shadow-lg">
+                <div class="camera"></div>
+                <div class="display">
+                  <div class="artboard artboard-demo phone-1">
+                    <img src="/images/general.svg" class="rounded-box w-5/6 bg-gray-900" />
+                    <lead><%= gettext("General Plan Notifier") %></lead>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="mockup-phone shadow-lg">
+                <div class="camera"></div>
+                <div class="display">
+                  <div class="artboard artboard-demo phone-1">
+                    <img src="/images/advanced.svg" class="rounded-box w-5/6 bg-gray-900" />
+                    <lead><%= gettext("Advenced Plan Notifier") %></lead>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="mockup-phone shadow-lg">
+                <div class="camera"></div>
+                <div class="display">
+                  <div class="artboard artboard-demo phone-1">
+                    <img src="/images/companion.svg" class="rounded-box w-5/6 bg-gray-900" />
+                    <lead><%= gettext("Companion Plan Notifier") %></lead>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div class="lg:pr-4">
@@ -164,5 +194,9 @@ defmodule LineReminderWeb.HomeComponent do
       </div>
     </div>
     """
+  end
+
+  def mount(socket) do
+    {:ok, socket}
   end
 end
