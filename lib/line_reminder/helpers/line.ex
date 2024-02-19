@@ -1,25 +1,36 @@
 defmodule LineReminder.Line do
   @moduledoc """
-  Line http client wrapper
-  """
-  import OK, only: [~>: 2]
+  Line HTTP client wrapper
 
-  @doc """
-  Send passing message to particular line group
+  This module provides functions to send messages to Line groups using the Line Notify API.
 
   ## Examples
 
-  iex> send_to_group("abc")
-  {:ok, Topic already be sent}
+      iex> LineReminder.Line.send_to_group("abc")
+      {:ok, "Topic already sent"}
 
-  iex> send_to_group("abcdef")
-  {:error, reason}
+      iex> LineReminder.Line.send_to_group("abcdef")
+      {:error, "reason"}
+
+  """
+
+  import OK, only: [~>: 2]
+
+  @doc """
+  Sends a message to a Line group.
+
+  ## Examples
+
+      iex> send_to_group("abc")
+      {:ok, "Topic already sent"}
+
   """
   @spec send_to_group(String.t()) :: {:ok, String.t()} | {:error, String.t()}
   def send_to_group(msg) do
     send_to_group(msg, Application.fetch_env!(:line_reminder, :line_token))
   end
 
+  @spec send_to_group(String.t(), String.t()) :: {:ok, String.t()} | {:error, String.t()}
   def send_to_group(msg, token) do
     [
       url: "https://notify-api.line.me/api/notify",

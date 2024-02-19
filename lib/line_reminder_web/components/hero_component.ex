@@ -6,16 +6,6 @@ defmodule LineReminderWeb.HeroComponent do
 
   import LineReminderWeb.Gettext, only: [gettext: 1]
 
-  def mount(socket) do
-    assigns = [
-      general_plan_amount: 0,
-      advance_plan_amount: 0,
-      companion_plan_amount: 0
-    ]
-
-    {:ok, assign(socket, assigns)}
-  end
-
   def render(assigns) do
     ~H"""
     <div class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
@@ -91,5 +81,15 @@ defmodule LineReminderWeb.HeroComponent do
       </div>
     </div>
     """
+  end
+
+  def mount(socket) do
+    assigns = [
+      general_plan_amount: 0,
+      advance_plan_amount: 0,
+      companion_plan_amount: 0
+    ]
+
+    {:ok, assign(socket, assigns)}
   end
 end
