@@ -5,11 +5,23 @@ defmodule LineReminder.DataDetailer do
   This module provides functions to read a file, transform its content, and build a list
   of maps suitable for further processing or insertion into a database.
 
-  ##  Examples:
+  ## Examples
 
-  iex> file_path = "path/to/your/file.txt"
-  iex> data = LineReminder.DataDetailer.transform(file_path)
+      iex> file_path = "path/to/your/file.txt"
+      iex> data = LineReminder.DataDetailer.transform(file_path)
+
   """
+
+  @doc """
+  Transforms the content of a file into a list of maps.
+
+  ## Examples
+
+      iex> file_path = "path/to/your/file.txt"
+      iex> data = LineReminder.DataDetailer.transform(file_path)
+
+  """
+  @spec transform(String.t()) :: {:ok, [map()]} | {:error, String.t()}
   def transform(file_path) do
     case File.read(file_path) do
       {:ok, content} ->
@@ -19,7 +31,7 @@ defmodule LineReminder.DataDetailer do
         |> Enum.map(&to_map/1)
 
       {:error, reason} ->
-        IO.puts("Error reading file: #{reason}")
+        {:error, "Error reading file: #{reason}"}
     end
   end
 

@@ -60,7 +60,8 @@ defmodule LineReminder.MixProject do
       {:quantum, "~> 3.5"},
       {:heroicons, "~> 0.5.3"},
       {:req, "~> 0.4.8"},
-      {:ok, "~> 2.3"}
+      {:ok, "~> 2.3"},
+      {:qr_code, "~> 3.0.0"}
     ]
   end
 
