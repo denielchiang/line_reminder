@@ -3,8 +3,6 @@ defmodule LineReminderWeb.SubscribeController do
 
   alias LineReminder.Line
 
-  require Logger
-
   @grant_type "authorization_code"
   @response_type "code"
   @scope "notify"
@@ -23,7 +21,6 @@ defmodule LineReminderWeb.SubscribeController do
     code_req_uri =
       notify_auth_uri()
       |> append_code_req(program)
-      |> dbg()
 
     conn |> redirect(external: code_req_uri) |> halt()
   end
