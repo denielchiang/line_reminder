@@ -6,6 +6,8 @@ defmodule LineReminderWeb.HomeComponent do
 
   import LineReminderWeb.Gettext, only: [gettext: 1]
 
+  alias LineReminder.QrcodeHelpers
+
   def render(assigns) do
     ~H"""
     <div class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
@@ -45,14 +47,14 @@ defmodule LineReminderWeb.HomeComponent do
           <div class="lg:pr-4">
             <div class="lg:max-w-lg">
               <p class="text-base font-semibold leading-7 text-indigo-600">
-                <%= gettext("Notify progress") %>
+                <%= gettext("Notify your progress") %>
               </p>
               <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 <%= gettext("Introduction to Line Notify Integration") %>
               </h1>
               <p class="mt-6 text-xl leading-8 text-gray-700">
                 <%= gettext(
-                  "Welcome to our platform! To receive timely updates on your Bible reading progress, follow these simple steps using Line Notify:"
+                  "Welcome to our platform! To receive timely updates on your Bible reading progress, follow these simple steps using Line Notify Bot"
                 ) %>
               </p>
             </div>
@@ -60,39 +62,19 @@ defmodule LineReminderWeb.HomeComponent do
         </div>
         <div class="flex-1 -ml-12 -mt-8 p-8 sticky lg:top-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden ">
           <div class="carousel carousel-center max-w-md p-4 space-x-4 rounded-box">
-            <div class="carousel-item">
-              <div class="mockup-phone shadow-lg">
-                <div class="camera"></div>
-                <div class="display">
-                  <div class="artboard artboard-demo phone-1">
-                    <img src="/images/general.svg" class="rounded-box w-5/6 bg-gray-900" />
-                    <lead><%= gettext("General Plan Notifier") %></lead>
+            <%= for {lead, qrcode} <- @qrcodes do %>
+              <div class="carousel-item">
+                <div class="mockup-phone shadow-lg">
+                  <div class="camera"></div>
+                  <div class="display">
+                    <div class="artboard artboard-demo phone-1">
+                      <img src={qrcode} class="rounded-box w-5/6 bg-gray-900" alt={lead} />
+                      <lead><%= lead %></lead>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="carousel-item">
-              <div class="mockup-phone shadow-lg">
-                <div class="camera"></div>
-                <div class="display">
-                  <div class="artboard artboard-demo phone-1">
-                    <img src="/images/advanced.svg" class="rounded-box w-5/6 bg-gray-900" />
-                    <lead><%= gettext("Advenced Plan Notifier") %></lead>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div class="mockup-phone shadow-lg">
-                <div class="camera"></div>
-                <div class="display">
-                  <div class="artboard artboard-demo phone-1">
-                    <img src="/images/companion.svg" class="rounded-box w-5/6 bg-gray-900" />
-                    <lead><%= gettext("Companion Plan Notifier") %></lead>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <% end %>
           </div>
         </div>
         <div class="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
@@ -117,11 +99,11 @@ defmodule LineReminderWeb.HomeComponent do
                     </div>
                     <div class="bg-gray-100 p-5 pb-10 ">
                       <h4 class="text-lg leading-6 font-semibold text-gray-900">
-                        <%= gettext("Select Your Notification Group") %>
+                        <%= gettext("Choose a Program") %>
                       </h4>
                       <p class="mt-2 text-base leading-6 text-gray-500">
                         <%= gettext(
-                          "On the right, you will find three QR codes representing different notification groups. Choose the group you wish to receive updates from."
+                          "Scan one of the three QR codes corresponding to \"General Program,\" \"Companion Program,\" or \"Advanced Program\" to begin."
                         ) %>
                       </p>
                     </div>
@@ -137,11 +119,11 @@ defmodule LineReminderWeb.HomeComponent do
                     </div>
                     <div class="bg-gray-100 p-5 pb-10">
                       <h4 class="text-lg leading-6 font-semibold text-gray-900">
-                        <%= gettext("Login to Line and Choose Your Group") %>
+                        <%= gettext("Select Line Chat") %>
                       </h4>
                       <p class="mt-2 text-base leading-6 text-gray-500">
                         <%= gettext(
-                          "After selecting a group, log in to your Line account. Choose the specific group within Line where you'd like to receive notifications."
+                          "After scanning, select the Line chat where you want to receive daily reminders. Remember to invite the Line Notifier Bot to this chat first."
                         ) %>
                       </p>
                     </div>
@@ -157,11 +139,11 @@ defmodule LineReminderWeb.HomeComponent do
                     </div>
                     <div class="bg-gray-100 p-5 pb-10 ">
                       <h4 class="text-lg leading-6 font-semibold text-gray-900">
-                        <%= gettext("Subscription Confirmation") %>
+                        <%= gettext("Subscribe Confirmation") %>
                       </h4>
                       <p class="mt-2 text-base leading-6 text-gray-500">
                         <%= gettext(
-                          "Once selected, you will receive a confirmation message in the chosen group, such as \"You have subscribed to the General Reading Progress Assistant 🚀.\" This confirms your subscription."
+                          "Upon successful subscription, expect a message like \"You have subscribed to the General Reading Progress Assistant 🚀\" from the Line Notifier Bot."
                         ) %>
                       </p>
                     </div>
@@ -177,11 +159,11 @@ defmodule LineReminderWeb.HomeComponent do
                     </div>
                     <div class="bg-gray-100 p-5 pb-10 ">
                       <h4 class="text-lg leading-6 font-semibold text-gray-900">
-                        <%= gettext("Receive Daily Progress Reminders") %>
+                        <%= gettext("Receive Notifications") %>
                       </h4>
                       <p class="mt-2 text-base leading-6 text-gray-500">
                         <%= gettext(
-                          "Starting from the next day, you will receive progress reminders at 6 AM. These messages will keep you updated on your Bible reading journey."
+                          "You'll start receiving daily notifications in your Line chat at 6 am."
                         ) %>
                       </p>
                     </div>
@@ -197,6 +179,16 @@ defmodule LineReminderWeb.HomeComponent do
   end
 
   def mount(socket) do
-    {:ok, socket}
+    qrcodes = QrcodeHelpers.gen_qrcodes()
+    groups = QrcodeHelpers.get_groups() |> Enum.map(&append_wording/1)
+    qrcode_map = Enum.zip(groups, qrcodes) |> Map.new() |> Enum.reverse()
+
+    {:ok,
+     socket
+     |> assign(:qrcodes, qrcode_map)}
   end
+
+  defp append_wording("general"), do: gettext("General Program")
+  defp append_wording("advanced"), do: gettext("Advanced Program")
+  defp append_wording("companion"), do: gettext("Companion Program")
 end

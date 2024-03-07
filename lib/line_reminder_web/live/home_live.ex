@@ -4,13 +4,16 @@ defmodule LineReminderWeb.HomeLive do
   alias LineReminderWeb.{HeroComponent, HomeComponent}
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, :count, 10)
+    socket =
+      socket
+      |> assign(:count, 10)
+
     {:ok, socket}
   end
 
   def render(assigns) do
     ~H"""
-    <.live_component module={HeroComponent} id="hero" />
+    <.live_component module={HeroComponent} id="hero" count={@count} />
     <.live_component module={HomeComponent} id="home" />
     """
   end

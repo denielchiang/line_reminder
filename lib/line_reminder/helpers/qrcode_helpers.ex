@@ -15,6 +15,7 @@ defmodule LineReminder.QrcodeHelpers do
 
   @groups ["general", "advanced", "companion"]
   @qrcode_color {79, 70, 229}
+  @prepend_header "data:image/svg+xml;base64,"
 
   @spec gen_qrcodes() :: [String.t()]
   def gen_qrcodes() do
@@ -22,6 +23,16 @@ defmodule LineReminder.QrcodeHelpers do
     |> Enum.map(&gen_subscribe_url/1)
     |> Enum.map(&gen_qr_code/1)
   end
+
+  def gen_qrcode(group) when group in @groups do
+    group
+    |> gen_subscribe_url()
+    |> gen_qr_code()
+  end
+
+  def gen_qrcode(_group), do: {:error, "Parameter can be only [general, advanced, companion]"}
+
+  def get_groups(), do: @groups
 
   @spec gen_subscribe_url(String.t()) :: String.t()
   defp gen_subscribe_url(group) do
@@ -39,6 +50,7 @@ defmodule LineReminder.QrcodeHelpers do
 
     url
     |> gen_base64_code(svg_settings)
+    |> prepend_base64_preifx()
     |> case do
       {:ok, image} ->
         image
@@ -54,4 +66,7 @@ defmodule LineReminder.QrcodeHelpers do
     |> QRCode.render(:svg, svg_settings)
     |> QRCode.to_base64()
   end
+
+  defp prepend_base64_preifx({:ok, url}), do: {:ok, @prepend_header <> url}
+  defp prepend_base64_preifx(error), do: error
 end

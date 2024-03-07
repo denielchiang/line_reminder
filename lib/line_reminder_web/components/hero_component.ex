@@ -54,18 +54,10 @@ defmodule LineReminderWeb.HeroComponent do
           <dl class="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
             <div class="flex flex-col-reverse">
               <dt class="text-base leading-7 text-gray-300 font-comfortaa">
-                <%= gettext("Basic Plan Subscribers") %>
+                <%= gettext("General Plan Subscribers") %>
               </dt>
               <dd class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa">
                 <%= @general_plan_amount %>
-              </dd>
-            </div>
-            <div class="flex flex-col-reverse">
-              <dt class="text-base leading-7 text-gray-300 font-comfortaa">
-                <%= gettext("Advanced Plan Subscribers") %>
-              </dt>
-              <dd class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa">
-                <%= @advance_plan_amount %>
               </dd>
             </div>
             <div class="flex flex-col-reverse">
@@ -74,6 +66,14 @@ defmodule LineReminderWeb.HeroComponent do
               </dt>
               <dd class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa">
                 <%= @companion_plan_amount %>
+              </dd>
+            </div>
+            <div class="flex flex-col-reverse">
+              <dt class="text-base leading-7 text-gray-300 font-comfortaa">
+                <%= gettext("Advanced Plan Subscribers") %>
+              </dt>
+              <dd class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa">
+                <%= @advance_plan_amount %>
               </dd>
             </div>
           </dl>

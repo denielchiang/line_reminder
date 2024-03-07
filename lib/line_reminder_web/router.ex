@@ -22,11 +22,11 @@ defmodule LineReminderWeb.Router do
     live "/", HomeLive
   end
 
-  scope "/auth", LineReminderWeb do
+  scope "/subscribe", LineReminderWeb do
     pipe_through :browser
 
-    get "/line", AuthController, :request
-    get "/line/callback", AuthController, :callback
+    get "/:program", SubscribeController, :request
+    get "/:program/callback", SubscribeController, :callback
   end
 
   # Other scopes may use custom stacks.
