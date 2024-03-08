@@ -29,13 +29,13 @@ config :line_reminder, LineReminderWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
-config :line_reminder, LineReminder.Scheduler,
-  timezone: "Asia/Taipei",
-  overlap: false,
-  run_strategy: Quantum.RunStrategy.Local,
-  jobs: [
-    {"* 6 * * *", {LineReminder.Messanger, :send, []}}
-  ]
+# config :line_reminder, LineReminder.Scheduler,
+#  timezone: "Asia/Taipei",
+#  overlap: false,
+#  run_strategy: Quantum.RunStrategy.Local,
+#  jobs: [
+#    {"* 6 * * *", {LineReminder.Messanger, :send, []}}
+#  ]
 
 # ## SSL Support
 #

@@ -8,7 +8,11 @@ defmodule LineReminderWeb.HeroComponent do
 
   def render(assigns) do
     ~H"""
-    <div class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
+    <div
+      id="hero-hook"
+      phx-hook="HeroJS"
+      class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32"
+    >
       <img
         src="/images/bg.avif"
         alt=""
@@ -56,24 +60,33 @@ defmodule LineReminderWeb.HeroComponent do
               <dt class="text-base leading-7 text-gray-300 font-comfortaa">
                 <%= gettext("General Plan Subscribers") %>
               </dt>
-              <dd class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa">
-                <%= @general_plan_amount %>
+              <dd
+                id="general-count"
+                class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa"
+              >
+                <%= @general_count %>
               </dd>
             </div>
             <div class="flex flex-col-reverse">
               <dt class="text-base leading-7 text-gray-300 font-comfortaa">
                 <%= gettext("Companion Plan Subscribers") %>
               </dt>
-              <dd class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa">
-                <%= @companion_plan_amount %>
+              <dd
+                id="advanced-count"
+                class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa"
+              >
+                <%= @advanced_count %>
               </dd>
             </div>
             <div class="flex flex-col-reverse">
               <dt class="text-base leading-7 text-gray-300 font-comfortaa">
                 <%= gettext("Advanced Plan Subscribers") %>
               </dt>
-              <dd class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa">
-                <%= @advance_plan_amount %>
+              <dd
+                id="companion-count"
+                class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa"
+              >
+                <%= @companion_count %>
               </dd>
             </div>
           </dl>
@@ -81,15 +94,5 @@ defmodule LineReminderWeb.HeroComponent do
       </div>
     </div>
     """
-  end
-
-  def mount(socket) do
-    assigns = [
-      general_plan_amount: 0,
-      advance_plan_amount: 0,
-      companion_plan_amount: 0
-    ]
-
-    {:ok, assign(socket, assigns)}
   end
 end

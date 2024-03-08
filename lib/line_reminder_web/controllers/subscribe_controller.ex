@@ -46,8 +46,11 @@ defmodule LineReminderWeb.SubscribeController do
       {:error, _others} -> {:error, "some errors"}
     end)
     |> then(fn
-      {:ok, token} -> Line.send_to_group("\n您已訂閱一般組讀經進度小幫手🚀", token)
-      other_msg -> other_msg
+      {:ok, token} ->
+        Line.send_to_group("\n您已訂閱一般組讀經進度小幫手🚀", token)
+
+      other_msg ->
+        other_msg
     end)
 
     redirect(conn, to: "/")
