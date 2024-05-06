@@ -16,3 +16,7 @@
   font-family: "Comfortaa";
   src: url("/fonts/Comfortaa-VariableFont_wght.ttf") format("truetype");
 }
+
+#general-count {
+  transition: all 0.5s ease-in-out; /* Adjust transition duration as needed */
+}

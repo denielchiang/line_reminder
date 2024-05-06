@@ -21,25 +21,19 @@ import "phoenix_html"
 import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
-import pleaserotate from "../vendor/pleaserotate"
+// Customized JS
+import { HeroJS } from "../vendor/hero.js"
+
+let Hooks = {}
+Hooks.HeroJS = HeroJS
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken } })
+let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken }, hooks: Hooks })
 
 // Show progress bar on live navigation and form submits
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" })
 window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
 window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
-
-// Show orientation forcing
-//window.addEventListener("phx:page-loading-start", () => {
-//  PleaseRotateOptions = {
-//    allowClickBypass: false,
-//    subMessage: "",
-//  };
-//
-//  pleaserotate.start(PleaseRotateOptions)
-//})
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()

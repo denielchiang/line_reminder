@@ -1,0 +1,95 @@
+defmodule LineReminder.Sns.Line do
+  @moduledoc """
+  Module for sending Line messages using Line Notify API.
+  """
+  import OK, only: [~>: 2]
+
+  @behaviour LineReminder.SnsBehaviour
+
+  @api_header [{"Content-Type", "application/x-www-form-urlencoded"}]
+  @congrats_msg "\n您已訂閱[一般組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
+  @congrats_sticker_package 11_537
+  @congrats_sticker_id 52_002_734
+
+  defp notify_api_uri, do: Application.get_env(:line_reminder, :line_notify_api)
+
+  @doc """
+  Sends a congratulatory message to a Line group.
+
+  Params:
+    - token: The Line Notify API token for authentication.
+
+  ## Example:
+    iex> LineReminder.Line.send_congrats("Congratulations on your achievement!", "your_line_notify_token")
+    {:ok, "Message sent successfully"}
+
+  Returns:
+    - {:ok, "Message sent successfully"} on success.
+    - {:error, reason} on failure.
+  """
+  @impl true
+  def send_congrats(token) do
+    %{
+      stickerPackageId: @congrats_sticker_package,
+      stickerId: @congrats_sticker_id,
+      message: @congrats_msg
+    }
+    |> send_to_group(token)
+  end
+
+  @progress_sticker_package 11_537
+  @progress_sticker_id 52_002_768
+
+  @doc """
+  Sends a progress update message to a Line group.
+
+  Params:
+    - msg: The reading task message to send.
+    - token: The Line Notify API token for authentication.
+
+  ## Example:
+    iex> LineReminder.Line.send_progress("Matthew 6:9 NIV", "your_line_notify_token")
+    {:ok, "Message sent successfully"}
+
+  Returns:
+    - {:ok, "Message sent successfully"} on success.
+    - {:error, reason} on failure.
+  """
+  @impl true
+  def send_progress(msg, token) do
+    %{
+      stickerPackageId: @progress_sticker_package,
+      stickerId: @progress_sticker_id,
+      message: msg
+    }
+    |> send_to_group(token)
+  end
+
+  @impl true
+  def send_to_group(request, token) do
+    [
+      url: notify_api_uri(),
+      headers: @api_header,
+      auth: {:bearer, token}
+    ]
+    |> Req.new()
+    |> Req.post(
+      form: [
+        stickerPackageId: request.stickerPackageId,
+        stickerId: request.stickerId,
+        message: request.message
+      ]
+    )
+    |> then(fn
+      # status 200
+      {:ok, %Req.Response{body: body, status: 200}} -> {:ok, body["message"]}
+      # status 400, 401, 500, Other
+      {:ok, %Req.Response{body: body}} -> {:error, body["message"]}
+      {:error, _others} -> {:error, "connection failure happen"}
+    end)
+    ~> then(fn
+      "ok" -> "Message sent successfully"
+      other_body_message -> other_body_message
+    end)
+  end
+end

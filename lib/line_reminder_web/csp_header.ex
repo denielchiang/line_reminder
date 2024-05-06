@@ -15,7 +15,8 @@ defmodule LineReminderWeb.CSPHeader do
     connect-src 'self' #{ws_url(conn)} #{ws_url(conn, "wss")}; \
     script-src 'self' 'unsafe-inline' 'unsafe-eval'; \
     style-src 'self' 'unsafe-inline' 'unsafe-eval'; \
-    font-src 'self' data:;"
+    font-src 'self' data:; \
+    img-src 'self' data:;"
   end
 
   defp ws_url(conn, protocol \\ "ws") do

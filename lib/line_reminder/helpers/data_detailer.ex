@@ -28,26 +28,26 @@ defmodule LineReminder.DataDetailer do
         content
         |> String.replace("\uFEFF", "")
         |> String.split("\n", trim: true)
-        |> Enum.map(&to_map/1)
+        |> Enum.map(&to_map(&1, file_path))
 
       {:error, reason} ->
         {:error, "Error reading file: #{reason}"}
     end
   end
 
-  defp to_map(line) do
+  defp to_map(line, file_path) do
     line
     |> String.replace("\r", "")
     |> String.split("\t")
     |> Enum.chunk_every(2)
-    |> Enum.map(&build_map/1)
+    |> Enum.map(&build_map(&1, file_path))
   end
 
-  defp build_map([date, chapter]) do
+  defp build_map([date, chapter], file_path) do
     %{
       name: chapter,
       date: parse_date(date),
-      status: "set"
+      group: get_group(file_path)
     }
   end
 
@@ -58,5 +58,19 @@ defmodule LineReminder.DataDetailer do
       |> Enum.map(&String.to_integer/1)
 
     Date.new!(year, month, day)
+  end
+
+  defp get_group(file_path) do
+    [group | _filename] =
+      file_path
+      |> String.replace_suffix(".txt", "")
+      |> String.split("_")
+      |> Enum.reverse()
+
+    case group do
+      "general" -> 1
+      "advanced" -> 2
+      "companion" -> 3
+    end
   end
 end

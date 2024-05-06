@@ -4,8 +4,10 @@ defmodule LineReminderWeb.CalendarComponent do
   """
   use Phoenix.LiveComponent
 
-  alias LineReminder.Reminders
-  alias LineReminder.DateHelpers
+  import LineReminderWeb.Gettext, only: [gettext: 1]
+
+  alias LineReminder.Notifiers
+  alias LineReminder.DateHelper
 
   @week_start_at :sunday
 
@@ -107,25 +109,40 @@ defmodule LineReminderWeb.CalendarComponent do
                 </button>
 
                 <%= if day.event do %>
-                  <div class="flex flex-col h-10 w-full  overflow-hidden">
-                    <div class="bottom flex-grow h-10 py-1 w-full cursor-pointer">
-                      <div class={[
-                        "bg-cyan-400",
-                        sent?(day.event.status) && "bg-cyan-800",
-                        "event text-white rounded text-sm mb-1"
-                      ]}>
+                  <div class="flex flex-col h-40 w-full  overflow-hidden">
+                    <div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
+                      <!-- general progress -->
+                      <div class="event bg-purple-400 
+                        text-white rounded p-1 text-sm mb-1">
                         <span class="event-name">
-                          <%= day.event.name %>
+                          <%= gettext("[General]") %>
+                        </span>
+                        <span class="time">
+                          <%= day.event[:general] %>
+                        </span>
+                      </div>
+                      <!-- advanced progress  -->
+                      <div class="event bg-purple-600 
+                        text-white rounded p-1 text-sm mb-1">
+                        <span class="event-name">
+                          <%= gettext("[Advanced]") %>
+                        </span>
+                        <span class="time">
+                          <%= day.event[:advanced] %>
+                        </span>
+                      </div>
+                      <!-- companion progress  -->
+                      <div class="event bg-purple-800 
+                        text-white rounded p-1 text-sm mb-1">
+                        <span class="event-name">
+                          <%= gettext("[Companion]") %>
+                        </span>
+                        <span class="time">
+                          <%= day.event[:companion] %>
                         </span>
                       </div>
                     </div>
                   </div>
-
-                  <%= if sent?(day.event.status) do %>
-                    <span class="align-middle flex justify-center">
-                      <Heroicons.check_circle class="w-10 h-10 text-red-700" />
-                    </span>
-                  <% end %>
                 <% end %>
               </td>
             </tr>
@@ -137,15 +154,15 @@ defmodule LineReminderWeb.CalendarComponent do
   end
 
   def mount(socket) do
-    current_date = DateHelpers.taiwan_today()
+    with current_date <- DateHelper.taiwan_today() do
+      assigns = [
+        current_date: current_date,
+        selected_date: nil,
+        week_rows: week_rows(current_date)
+      ]
 
-    assigns = [
-      current_date: current_date,
-      selected_date: nil,
-      week_rows: week_rows(current_date)
-    ]
-
-    {:ok, assign(socket, assigns)}
+      {:ok, assign(socket, assigns)}
+    end
   end
 
   defp week_rows(current_date) do
@@ -166,11 +183,10 @@ defmodule LineReminderWeb.CalendarComponent do
 
   defp maybe_event_day(date) do
     date
-    |> Reminders.get_event_by_date()
+    |> Notifiers.get_events()
     |> wrapping_result(date)
   end
 
-  defp wrapping_result(nil, date), do: %{date: date, event: nil}
   defp wrapping_result(event, date), do: %{date: date, event: event}
 
   def handle_event("prev-month", _, socket) do
@@ -201,11 +217,8 @@ defmodule LineReminderWeb.CalendarComponent do
 
   defp selected_date?(day, selected_date), do: day == selected_date
 
-  defp today?(day), do: day == DateHelpers.taiwan_today()
+  defp today?(day), do: day == DateHelper.taiwan_today()
 
   defp other_month?(day, current_date),
     do: Date.beginning_of_month(day) != Date.beginning_of_month(current_date)
-
-  defp sent?(status) when status == "sent", do: true
-  defp sent?(_), do: false
 end
