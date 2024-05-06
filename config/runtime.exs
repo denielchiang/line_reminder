@@ -75,14 +75,13 @@ if config_env() == :prod do
     companion_client_id: System.get_env("COMPANION_CLIENT_ID"),
     companion_client_secret: System.get_env("COMPANION_CLIENT_SECRET")
 
-  # config :line_reminder, LineReminder.Scheduler,
-
-  #   timezone: "Asia/Taipei",
-  #   overlap: false,
-  #   run_strategy: Quantum.RunStrategy.Local,
-  #   jobs: [
-  #     {"* 6 * * *", {LineReminder.Messanger, :send, []}}
-  #   ]
+  config :line_reminder, LineReminder.Scheduler,
+    timezone: "Asia/Taipei",
+    overlap: false,
+    run_strategy: Quantum.RunStrategy.Local,
+    jobs: [
+      {"* 6 * * *", {LineReminder.Apostle, :send, []}}
+    ]
 
   # ## SSL Support
   #
