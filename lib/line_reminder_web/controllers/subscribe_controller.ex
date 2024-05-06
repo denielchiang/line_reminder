@@ -1,7 +1,10 @@
 defmodule LineReminderWeb.SubscribeController do
   use LineReminderWeb, :controller
 
-  alias LineReminder.Line
+  require Logger
+
+  alias LineReminder.Receivers
+  alias LineReminder.Sns.Line
 
   @grant_type "authorization_code"
   @response_type "code"
@@ -47,10 +50,18 @@ defmodule LineReminderWeb.SubscribeController do
     end)
     |> then(fn
       {:ok, token} ->
-        Line.send_to_group("\n您已訂閱一般組讀經進度小幫手🚀", token)
+        %{group: Receivers.get_group_code(program), token: token}
+        |> Receivers.create_receiver()
 
       other_msg ->
         other_msg
+    end)
+    |> then(fn
+      {:ok, receiver} ->
+        Line.send_congrats(receiver.token)
+
+      {:error, msg} ->
+        Logger.error(msg)
     end)
 
     redirect(conn, to: "/")

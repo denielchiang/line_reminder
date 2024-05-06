@@ -1,7 +1,7 @@
 export const HeroJS = {
   mounted() {
     // Change the interval as per your preference
-    let intervalMSec = 50;
+    let intervalMSec = 30;
 
     // general program animation
     let generalCount = document.getElementById('general-count');

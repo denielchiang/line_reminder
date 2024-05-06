@@ -1,4 +1,4 @@
-defmodule LineReminder.Reminders do
+defmodule LineReminder.Events do
   @moduledoc """
   The Reminders context.
   """
@@ -6,7 +6,7 @@ defmodule LineReminder.Reminders do
   import Ecto.Query, warn: false
   alias LineReminder.Repo
 
-  alias LineReminder.Reminders.Event
+  alias LineReminder.Notifiers.Event
 
   @doc """
   Returns the list of events.
@@ -45,10 +45,23 @@ defmodule LineReminder.Reminders do
 
   iex> get_event_by_date(~D[1970-01-01])
   nil
+
+  iex> get_event_by_date(~D[2024-04-15])
+  [
+  %LineReminder.Notifiers.Event{
+    __meta__: #Ecto.Schema.Metadata<:loaded, "events">,
+    id: "29ba0605-3dd9-46f5-a69d-c7bf9c068915",
+    date: ~D[2024-04-15],
+    name: "士師記7-8",
+    group: :general,
+    inserted_at: ~N[2024-03-12 16:58:21],
+    updated_at: ~N[2024-03-12 16:58:21]
+  }
+  ]
   """
-  def get_event_by_date(date) do
+  def get_events_by_date(date) do
     query = from e in Event, where: e.date == ^date
-    Repo.one(query)
+    Repo.all(query)
   end
 
   @doc """
@@ -115,9 +128,6 @@ defmodule LineReminder.Reminders do
   def change_event(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
   end
-
-  @event_status_sent "sent"
-  def event_status_sent(), do: @event_status_sent
 
   def has_events_with_2024? do
     query = from e in Event, where: fragment("?::date >= ?", e.date, ^~D[2024-01-01])

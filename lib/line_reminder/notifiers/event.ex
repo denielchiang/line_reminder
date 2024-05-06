@@ -1,4 +1,4 @@
-defmodule LineReminder.Reminders.Event do
+defmodule LineReminder.Notifiers.Event do
   @moduledoc """
   Event table that store reminders name and date
   """
@@ -10,8 +10,7 @@ defmodule LineReminder.Reminders.Event do
   schema "events" do
     field :date, :date
     field :name, :string
-    # statuf from "set" -> "sent"
-    field :status, :string
+    field :group, Ecto.Enum, values: [general: 1, advanced: 2, companion: 3]
 
     timestamps()
   end
@@ -19,7 +18,7 @@ defmodule LineReminder.Reminders.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:name, :date, :status])
-    |> validate_required([:name, :date, :status])
+    |> cast(attrs, [:name, :date, :group])
+    |> validate_required([:name, :date, :group])
   end
 end

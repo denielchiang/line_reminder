@@ -6,7 +6,7 @@ defmodule LineReminderWeb.HomeComponent do
 
   import LineReminderWeb.Gettext, only: [gettext: 1]
 
-  alias LineReminder.QrcodeHelpers
+  alias LineReminder.QrcodeHelper
 
   def render(assigns) do
     ~H"""
@@ -179,8 +179,8 @@ defmodule LineReminderWeb.HomeComponent do
   end
 
   def mount(socket) do
-    qrcodes = QrcodeHelpers.gen_qrcodes()
-    groups = QrcodeHelpers.get_groups() |> Enum.map(&append_wording/1)
+    qrcodes = QrcodeHelper.gen_qrcodes()
+    groups = QrcodeHelper.get_groups() |> Enum.map(&append_wording/1)
     qrcode_map = Enum.zip(groups, qrcodes) |> Map.new() |> Enum.reverse()
 
     {:ok,

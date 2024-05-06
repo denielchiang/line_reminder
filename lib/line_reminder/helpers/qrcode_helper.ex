@@ -1,4 +1,4 @@
-defmodule LineReminder.QrcodeHelpers do
+defmodule LineReminder.QrcodeHelper do
   @moduledoc """
   QR Code Helpers
 
