@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for line-reminder-2 on 2024-02-21T09:26:29+08:00
+# fly.toml app configuration file generated for alertime-app on 2024-05-08T23:14:21+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'aler-time'
-primary_region = 'hkg'
+app = 'alertime-app'
+primary_region = 'nrt'
 kill_signal = 'SIGTERM'
 
 [build]
@@ -13,14 +13,14 @@ kill_signal = 'SIGTERM'
   release_command = '/app/bin/migrate'
 
 [env]
-  PHX_HOST = 'alertime.fly.dev'
+  PHX_HOST = 'alertime-app.fly.dev'
   PORT = '8080'
 
 [http_service]
   internal_port = 8080
   force_https = true
   auto_stop_machines = false
-  auto_start_machines = false
+  auto_start_machines = true
   min_machines_running = 0
   processes = ['app']
 

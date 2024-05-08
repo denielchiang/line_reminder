@@ -65,7 +65,6 @@ if config_env() == :prod do
 
   config :line_reminder,
     line_notify_api: System.get_env("LINE_API_URI"),
-    line_token: System.get_env("LINE_TOKEN"),
     line_notify_auth_uri: System.get_env("LINE_NOTIFY_AUTH_URI"),
     line_notify_auth_token_uri: System.get_env("LINE_NOTIFY_AUTH_TOKEN_URI"),
     general_client_id: System.get_env("GENERAL_CLIENT_ID"),
