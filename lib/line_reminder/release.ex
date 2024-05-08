@@ -26,8 +26,6 @@ defmodule LineReminder.Release do
     Application.load(@app)
   end
 
-
-# TODO: migrate to use new way
   def seeds(year \\ Date.utc_today().year()) do
     Application.load(@app)
 
