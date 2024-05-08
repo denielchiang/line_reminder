@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'line-reminder-2'
+app = 'aler-time'
 primary_region = 'hkg'
 kill_signal = 'SIGTERM'
 
@@ -13,7 +13,7 @@ kill_signal = 'SIGTERM'
   release_command = '/app/bin/migrate'
 
 [env]
-  PHX_HOST = 'line-reminder-2.fly.dev'
+  PHX_HOST = 'alertime.fly.dev'
   PORT = '8080'
 
 [http_service]
