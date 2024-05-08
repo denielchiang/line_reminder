@@ -10,8 +10,8 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 alias LineReminder.Repo
-alias LineReminder.Reminders
-alias LineReminder.Reminders.Event
+alias LineReminder.Events
+alias LineReminder.Notifiers.Event
 
 unless Repo.exists?(Event) do
   events = [
@@ -137,7 +137,7 @@ unless Repo.exists?(Event) do
 
   Repo.transaction(fn ->
     Enum.each(events, fn event ->
-      Reminders.create_event(event)
+      Events.create_event(event)
     end)
   end)
 end
