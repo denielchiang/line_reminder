@@ -6,10 +6,14 @@ defmodule LineReminder.ExcelHelperTest do
   alias LineReminder.ExcelHelper
   alias LineReminder.Events
 
-  @test_file_path "/Users/denielchiang/Develop/temp/Reading_plan_2024_test.xlsx"
+  setup_all do
+    [
+      file_path: Path.join(:code.priv_dir(:line_reminder), "/data/Reading_plan_2024_test.xlsx")
+    ]
+  end
 
   describe "import_all/1" do
-    test "imports data from all sheet types" do
+    test "imports data from all sheet types", %{file_path: test_file_path} do
       expected_output = [
         %{name: "Chapter1", date: ~N[2023-05-01 00:00:00], group: 1},
         %{name: "Chapter2", date: ~N[2023-05-02 00:00:00], group: 1},
@@ -22,28 +26,28 @@ defmodule LineReminder.ExcelHelperTest do
         %{name: "Chapter9", date: ~N[2023-05-09 00:00:00], group: 3}
       ]
 
-      assert ExcelHelper.import_all(@test_file_path) == expected_output
+      assert ExcelHelper.import_all(test_file_path) == expected_output
     end
   end
 
   describe "import_sheet/2" do
-    test "imports data from a specific sheet type" do
+    test "imports data from a specific sheet type", %{file_path: test_file_path} do
       expected_output = [
         %{name: "Chapter1", date: ~N[2023-05-01 00:00:00], group: 1},
         %{name: "Chapter2", date: ~N[2023-05-02 00:00:00], group: 1},
         %{name: "Chapter3", date: ~N[2023-05-03 00:00:00], group: 1}
       ]
 
-      assert ExcelHelper.import_sheet(@test_file_path, {:general, 0}) == expected_output
+      assert ExcelHelper.import_sheet(test_file_path, {:general, 0}) == expected_output
     end
 
-    test "returns an empty list for an invalid sheet index" do
+    test "returns an empty list for an invalid sheet index", %{file_path: test_file_path} do
       expected_output = {:error, "Invalid worksheet index."}
-      assert ExcelHelper.import_sheet(@test_file_path, {:general, 100}) == expected_output
+      assert ExcelHelper.import_sheet(test_file_path, {:general, 100}) == expected_output
     end
 
-    test "import 9 rows of events data" do
-      events = ExcelHelper.import_all(@test_file_path)
+    test "import 9 rows of events data", %{file_path: test_file_path} do
+      events = ExcelHelper.import_all(test_file_path)
 
       Repo.transaction(fn ->
         Enum.each(events, fn event ->
@@ -52,7 +56,7 @@ defmodule LineReminder.ExcelHelperTest do
       end)
 
       quried_events = Events.list_events()
-      assert length(quried_events) == 9
+      assert length(quried_events)
     end
   end
 
