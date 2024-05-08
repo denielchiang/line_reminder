@@ -54,6 +54,9 @@ COPY assets assets
 # Run npm install
 RUN cd assets && npm install
 
+# Run npm settngs before compile assets
+RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
+
 # compile assets
 RUN mix assets.deploy
 
