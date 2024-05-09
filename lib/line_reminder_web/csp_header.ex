@@ -13,7 +13,7 @@ defmodule LineReminderWeb.CSPHeader do
   defp csp(conn) do
     "default-src 'self'; \
     connect-src 'self' #{ws_url(conn)} #{ws_url(conn, "wss")}; \
-    script-src 'self' 'unsafe-inline' 'unsafe-eval'; \
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' #{cloudflare_insight_url()}; \
     style-src 'self' 'unsafe-inline' 'unsafe-eval'; \
     font-src 'self' data:; \
     img-src 'self' data:;"
@@ -23,4 +23,6 @@ defmodule LineReminderWeb.CSPHeader do
     endpoint = Phoenix.Controller.endpoint_module(conn)
     %{endpoint.struct_url | scheme: protocol} |> URI.to_string()
   end
+
+  defp cloudflare_insight_url(), do: "static.cloudflareinsights.com"
 end
