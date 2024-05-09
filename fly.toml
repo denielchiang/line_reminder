@@ -13,7 +13,7 @@ kill_signal = 'SIGTERM'
   release_command = '/app/bin/migrate'
 
 [env]
-  PHX_HOST = 'alertime-app.fly.dev'
+  PHX_HOST = 'alertime.room3327.net'
   PORT = '8080'
 
 [http_service]
