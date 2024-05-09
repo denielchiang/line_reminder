@@ -108,9 +108,9 @@ defmodule LineReminderWeb.CalendarComponent do
                   </time>
                 </button>
 
-                <%= if day.event do %>
-                  <div class="flex flex-col h-40 w-full  overflow-hidden">
-                    <div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
+                <div class="flex flex-col h-40 w-full  overflow-hidden">
+                  <div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
+                    <%= if has_event?(day.event[:general]) do %>
                       <!-- general progress -->
                       <div class="event bg-purple-400 
                         text-white rounded p-1 text-sm mb-1">
@@ -121,6 +121,9 @@ defmodule LineReminderWeb.CalendarComponent do
                           <%= day.event[:general] %>
                         </span>
                       </div>
+                    <% end %>
+
+                    <%= if has_event?(day.event[:advanced]) do %>
                       <!-- advanced progress  -->
                       <div class="event bg-purple-600 
                         text-white rounded p-1 text-sm mb-1">
@@ -131,6 +134,9 @@ defmodule LineReminderWeb.CalendarComponent do
                           <%= day.event[:advanced] %>
                         </span>
                       </div>
+                    <% end %>
+
+                    <%= if has_event?(day.event[:companion]) do %>
                       <!-- companion progress  -->
                       <div class="event bg-purple-800 
                         text-white rounded p-1 text-sm mb-1">
@@ -141,9 +147,9 @@ defmodule LineReminderWeb.CalendarComponent do
                           <%= day.event[:companion] %>
                         </span>
                       </div>
-                    </div>
+                    <% end %>
                   </div>
-                <% end %>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -221,4 +227,7 @@ defmodule LineReminderWeb.CalendarComponent do
 
   defp other_month?(day, current_date),
     do: Date.beginning_of_month(day) != Date.beginning_of_month(current_date)
+
+  defp has_event?(event) when is_nil(event), do: false
+  defp has_event?(_event), do: true
 end
