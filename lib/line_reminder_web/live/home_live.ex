@@ -1,14 +1,19 @@
 defmodule LineReminderWeb.HomeLive do
   use LineReminderWeb, :live_view
 
-  alias LineReminderWeb.{HeroComponent, HomeComponent}
+  alias LineReminder.Receivers
+  alias LineReminderWeb.HeroComponent
+  alias LineReminderWeb.HomeComponent
 
   def mount(_params, _session, socket) do
+    %{general: g_cnt, advanced: a_cnt, companion: c_cnt} =
+      Receivers.count_receiver_groups()
+
     socket =
       socket
-      |> assign(:general_count, 100)
-      |> assign(:advanced_count, 50)
-      |> assign(:companion_count, 30)
+      |> assign(:general_count, g_cnt)
+      |> assign(:advanced_count, a_cnt)
+      |> assign(:companion_count, c_cnt)
 
     {:ok, socket}
   end
