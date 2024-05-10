@@ -20,12 +20,11 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
 FROM ${BUILDER_IMAGE} as builder
 
-# Add Node.js package sources
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-
 # install build dependencies
 RUN apt-get update -y && apt-get install -y build-essential git nodejs npm \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+RUN npm install
 
 # prepare build dir
 WORKDIR /app
@@ -49,6 +48,10 @@ COPY config/config.exs config/${MIX_ENV}.exs config/
 RUN mix deps.compile
 
 COPY priv priv
+
+# Sadly, daisyui needs this
+COPY assets/package*.json assets/
+RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
 COPY lib lib
 
