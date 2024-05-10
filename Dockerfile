@@ -48,8 +48,8 @@ RUN mkdir config
 COPY config/config.exs config/${MIX_ENV}.exs config/
 RUN mix deps.compile
 
-# install npm dependencies
-COPY assets/package.json assets/package-lock.json ./assets/
+# Sadly, daisyui needs this
+COPY assets/package*.json assets/
 RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
 COPY priv priv
