@@ -14,7 +14,7 @@ defmodule LineReminderWeb.CalendarComponent do
   def render(assigns) do
     ~H"""
     <div class="container mx-auto mt-10">
-      <div class="wrapper bg-white rounded shadow w-full ">
+      <div class="wrapper bg-white rounded shadow w-full">
         <div class="header flex justify-between border p-2">
           <span class="text-lg font-bold">
             <%= Calendar.strftime(@current_date, "%B %Y") %>
