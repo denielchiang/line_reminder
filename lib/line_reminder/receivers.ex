@@ -10,7 +10,7 @@ defmodule LineReminder.Receivers do
 
   @type receiver :: %LineReminder.Notifiers.Receiver{}
 
-  @gernal_code 1
+  @general_code 1
   @advanced_code 2
   @companion_code 3
 
@@ -26,7 +26,7 @@ defmodule LineReminder.Receivers do
   @spec get_group_code(String.t()) :: integer
   def get_group_code(program) do
     case program do
-      "general" -> @gernal_code
+      "general" -> @general_code
       "advanced" -> @advanced_code
       "companion" -> @companion_code
     end
@@ -44,6 +44,33 @@ defmodule LineReminder.Receivers do
   @spec list_receivers() :: [receiver]
   def list_receivers do
     Repo.all(Receiver)
+  end
+
+  @doc """
+  Returns count each group of receivers. It ALWAYS has key `general`, `advanced`
+  and `companion`. even the count is 0.
+
+  ## Examples
+
+      iex> count_receiver_groups()
+      %{general: 3, advanced: 0, companion: 1}
+
+  """
+  @spec count_receiver_groups() :: map
+  def count_receiver_groups() do
+    query =
+      from r in Receiver,
+        group_by: r.group,
+        order_by: r.group,
+        select: {r.group, count()}
+
+    base = [general: 0, advanced: 0, companion: 0] |> Enum.into(%{})
+
+    Repo.all(query)
+    |> Enum.into(%{})
+    |> Map.merge(base, fn _key, val_a, val_b ->
+      val_a + val_b
+    end)
   end
 
   @doc """

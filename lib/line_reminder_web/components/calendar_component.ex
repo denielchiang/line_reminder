@@ -19,6 +19,11 @@ defmodule LineReminderWeb.CalendarComponent do
           <span class="text-lg font-bold">
             <%= Calendar.strftime(@current_date, "%B %Y") %>
           </span>
+          <div>
+            <div class="badge badge-outline"><%= gettext("General") %></div>
+            <div class="badge badge-primary badge-outline"><%= gettext("Advanced") %></div>
+            <div class="badge badge-secondary badge-outline"><%= gettext("Companion") %></div>
+          </div>
           <div class="buttons">
             <button type="button" phx-target={@myself} phx-click="prev-month" class="p-1">
               <svg
@@ -91,7 +96,7 @@ defmodule LineReminderWeb.CalendarComponent do
               <td
                 :for={day <- week}
                 class={[
-                  today?(day.date) && "bg-green-100",
+                  today?(day.date) && "bg-lime-100",
                   other_month?(day.date, @current_date) && "bg-gray-100",
                   selected_date?(day.date, @selected_date) && "bg-blue-100",
                   "align-top border p-1 h-30 xl:w-40 lg:w-20 md:w-20 sm:w-20 w-20 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300"
@@ -108,42 +113,16 @@ defmodule LineReminderWeb.CalendarComponent do
                   </time>
                 </button>
 
-                <%= if day.event do %>
-                  <div class="flex flex-col h-40 w-full  overflow-hidden">
-                    <div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
-                      <!-- general progress -->
-                      <div class="event bg-purple-400 
-                        text-white rounded p-1 text-sm mb-1">
-                        <span class="event-name">
-                          <%= gettext("[General]") %>
-                        </span>
-                        <span class="time">
-                          <%= day.event[:general] %>
-                        </span>
-                      </div>
-                      <!-- advanced progress  -->
-                      <div class="event bg-purple-600 
-                        text-white rounded p-1 text-sm mb-1">
-                        <span class="event-name">
-                          <%= gettext("[Advanced]") %>
-                        </span>
-                        <span class="time">
-                          <%= day.event[:advanced] %>
-                        </span>
-                      </div>
-                      <!-- companion progress  -->
-                      <div class="event bg-purple-800 
-                        text-white rounded p-1 text-sm mb-1">
-                        <span class="event-name">
-                          <%= gettext("[Companion]") %>
-                        </span>
-                        <span class="time">
-                          <%= day.event[:companion] %>
-                        </span>
-                      </div>
-                    </div>
+                <div class="flex flex-col h-40 w-full overflow-hidden">
+                  <div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
+                    <!-- companion progress  -->
+                    <.event_badge badge={day.event[:companion]} type={:companion} />
+                    <!-- general progress  -->
+                    <.event_badge badge={day.event[:general]} type={:general} />
+                    <!-- advanced progress  -->
+                    <.event_badge badge={day.event[:advanced]} type={:advanced} />
                   </div>
-                <% end %>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -163,6 +142,34 @@ defmodule LineReminderWeb.CalendarComponent do
 
       {:ok, assign(socket, assigns)}
     end
+  end
+
+  def event_badge(%{badge: event} = assigns) when is_nil(event) do
+    ~H"""
+    <!-- No event -->
+    """
+  end
+
+  def event_badge(%{type: :general} = assigns) do
+    ~H"""
+    <div class="badge badge-outline"><%= List.to_string(assigns[:badge]) %></div>
+    """
+  end
+
+  def event_badge(%{type: :advanced} = assigns) do
+    ~H"""
+    <%= for ch <- maybe_multi_chps(assigns[:badge]) do %>
+      <div class="badge badge-primary badge-outline"><%= ch %></div>
+    <% end %>
+    """
+  end
+
+  def event_badge(%{type: :companion} = assigns) do
+    ~H"""
+    <%= for ch <- maybe_multi_chps(assigns[:badge]) do %>
+      <div class="badge badge-secondary badge-outline"><%= ch %></div>
+    <% end %>
+    """
   end
 
   defp week_rows(current_date) do
@@ -221,4 +228,6 @@ defmodule LineReminderWeb.CalendarComponent do
 
   defp other_month?(day, current_date),
     do: Date.beginning_of_month(day) != Date.beginning_of_month(current_date)
+
+  defp maybe_multi_chps(event), do: List.to_string(event) |> String.split(";")
 end
