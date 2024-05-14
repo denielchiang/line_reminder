@@ -7,7 +7,6 @@ defmodule LineReminder.Sns.Line do
   @behaviour LineReminder.SnsBehaviour
 
   @api_header [{"Content-Type", "application/x-www-form-urlencoded"}]
-  @congrats_msg "\n您已訂閱[一般組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
   @congrats_sticker_package 11_537
   @congrats_sticker_id 52_002_734
 
@@ -28,14 +27,18 @@ defmodule LineReminder.Sns.Line do
     - {:error, reason} on failure.
   """
   @impl true
-  def send_congrats(token) do
+  def send_congrats(token, group) do
     %{
       stickerPackageId: @congrats_sticker_package,
       stickerId: @congrats_sticker_id,
-      message: @congrats_msg
+      message: choose_msg(group)
     }
     |> send_to_group(token)
   end
+
+  defp choose_msg("general"), do: "\n您已訂閱[一般組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
+  defp choose_msg("advanced"), do: "\n您已訂閱[速讀組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
+  defp choose_msg("companion"), do: "\n您已訂閱[陪讀組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
 
   @progress_sticker_package 11_537
   @progress_sticker_id 52_002_768
