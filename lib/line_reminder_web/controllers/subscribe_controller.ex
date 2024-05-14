@@ -58,7 +58,7 @@ defmodule LineReminderWeb.SubscribeController do
     end)
     |> then(fn
       {:ok, receiver} ->
-        Line.send_congrats(receiver.token)
+        Line.send_congrats(receiver.token, program)
 
       {:error, msg} ->
         Logger.error(msg)

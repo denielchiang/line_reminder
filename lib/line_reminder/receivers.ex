@@ -91,30 +91,34 @@ defmodule LineReminder.Receivers do
   def get_receiver!(id), do: Repo.get!(Receiver, id)
 
   @doc """
-  Retrieves a list of receivers to send based on their last update time.
+    Retrieves a list of receivers to send based on their last update time.
 
-  This function queries the database for receivers whose `updated_at` timestamp is older than 23 hours ago. The purpose of this function is to retrieve receivers that have not been updated within the specified time frame, possibly indicating that they need to be sent some notification or action.
+    This function queries the database for receivers that meet the following criteria:
 
-  The reason for choosing "23 hours ago" instead of "1 day ago" is to mitigate potential time shifts that may occur in batch job scheduling. When batch jobs involving sending API requests are executed repeatedly, the execution time may vary slightly due to system load or scheduling delays. Using "23 hours ago" helps accommodate these variations and ensures the fault tolerance of this function.
+    1. The first time for user - If the inserted_at and updated_at timestamps are the same, the receiver is included.
+    2. Each time after the first time for user - If the inserted_at and updated_at timestamps are different, the receiver is included only if the updated_at timestamp is older than 23 hours ago.
 
-  ## Examples
+    The purpose of this function is to retrieve receivers that need to be sent some notification or action based on the criteria mentioned above.
 
-      iex> list_receivers_to_send()
-      [%Receiver{}, ...]
+    ## Examples
 
-  Returns a list of receivers that need to be sent notifications or actions.
+        iex> list_receivers_to_send()
+        [%Receiver{}, ...]
 
-  ## Notes
+    Returns a list of receivers that need to be sent notifications or actions.
 
-  - This function assumes that `Receiver` is an Ecto schema representing receivers.
-  - The `updated_at` field is assumed to be a timestamp indicating the last time the receiver was updated.
+    ## Notes
 
+    - This function assumes that Receiver is an Ecto schema representing receivers.
+    - The inserted_at and updated_at fields are assumed to be timestamps indicating the creation and last update times of the receiver, respectively.
   """
   @spec list_receivers_to_send() :: [receiver]
   def list_receivers_to_send() do
     query =
       from r in Receiver,
-        where: r.updated_at < ago(23, "hour")
+        where:
+          r.inserted_at == r.updated_at or
+            r.updated_at < ago(23, "hour")
 
     Repo.all(query)
   end
