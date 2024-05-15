@@ -76,9 +76,12 @@ defmodule LineReminder.Notifiers do
       |> Enum.map(&Map.from_struct/1)
       |> Enum.map(&choose_msg(&1, progress_today))
       |> List.flatten()
+      |> Enum.map(&do_break_line/1)
       |> Enum.reject(&is_nil/1)
     end
   end
+
+  def send_progress(progress_today) when is_nil(progress_today), do: nil
 
   defp choose_msg(%{group: :general, token: token}, %{general: msgs}) when is_list(msgs),
     do: Enum.map(msgs, &%{msg: &1, token: token})
@@ -90,4 +93,7 @@ defmodule LineReminder.Notifiers do
     do: Enum.map(msgs, &%{msg: &1, token: token})
 
   defp choose_msg(_receiver, _msg_code), do: nil
+
+  defp do_break_line(pacakge) when is_nil(pacakge), do: nil
+  defp do_break_line(%{msg: msg} = package), do: %{package | msg: "\n#{msg}"}
 end
