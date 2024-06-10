@@ -41,7 +41,20 @@ defmodule LineReminder.Sns.Line do
   defp choose_msg("companion"), do: "\n您已訂閱[陪讀組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
 
   @progress_sticker_package 11_537
-  @progress_sticker_id 52_002_768
+
+  # https://developers.line.biz/en/docs/messaging-api/sticker-list/#sticker-definitions
+  defp get_sticker_ids do
+    [
+      52_002_768,
+      52_002_764,
+      52_002_752,
+      52_002_745,
+      52_002_735,
+      52_002_738,
+      52_002_739,
+      52_002_748
+    ]
+  end
 
   @doc """
   Sends a progress update message to a Line group.
@@ -62,7 +75,7 @@ defmodule LineReminder.Sns.Line do
   def send_progress(msg, token) do
     %{
       stickerPackageId: @progress_sticker_package,
-      stickerId: @progress_sticker_id,
+      stickerId: get_sticker_ids() |> Enum.random(),
       message: msg
     }
     |> send_to_group(token)
