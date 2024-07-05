@@ -60,11 +60,17 @@ defmodule LineReminderWeb.SubscribeController do
       {:ok, receiver} ->
         Line.send_congrats(receiver.token, program)
 
+        conn
+        |> put_flash(:info, "Subscriber created successfully.")
+        |> redirect(to: "/")
+
       {:error, msg} ->
         Logger.error(msg)
-    end)
 
-    redirect(conn, to: "/")
+        conn
+        |> put_flash(:error, "Failed to create subscriber.")
+        |> redirect(to: "/")
+    end)
   end
 
   defp append_code_req(uri, "general") do

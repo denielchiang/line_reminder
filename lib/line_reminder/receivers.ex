@@ -140,7 +140,20 @@ defmodule LineReminder.Receivers do
     %Receiver{}
     |> Receiver.changeset(attrs)
     |> Repo.insert()
+    |> broadcast_subscriber_count()
   end
+
+  defp broadcast_subscriber_count({:ok, %Receiver{} = receiver}) do
+    Phoenix.PubSub.broadcast(
+      LineReminder.PubSub,
+      "subscribers:#{receiver.group}",
+      {:updated, receiver}
+    )
+
+    {:ok, receiver}
+  end
+
+  defp broadcast_subscriber_count(error), do: error
 
   @doc """
   Updates a receiver.

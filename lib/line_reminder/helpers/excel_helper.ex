@@ -25,12 +25,14 @@ defmodule LineReminder.ExcelHelper do
   @type sheet_types_map :: %{
           general: 0,
           advanced: 1,
-          companion: 2
+          companion: 2,
+          companion2h: 3
         }
   @sheet_types %{
     general: 0,
     advanced: 1,
-    companion: 2
+    companion: 2,
+    companion2h: 3
   }
 
   @doc """
@@ -103,6 +105,7 @@ defmodule LineReminder.ExcelHelper do
       :general -> 1
       :advanced -> 2
       :companion -> 3
+      :companion2h -> 4
     end
   end
 

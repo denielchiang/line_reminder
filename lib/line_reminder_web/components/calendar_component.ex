@@ -6,6 +6,7 @@ defmodule LineReminderWeb.CalendarComponent do
 
   import LineReminderWeb.Gettext, only: [gettext: 1]
 
+  alias LineReminder.Notifiers.Receiver
   alias LineReminder.Notifiers
   alias LineReminder.DateHelper
 
@@ -220,6 +221,15 @@ defmodule LineReminderWeb.CalendarComponent do
 
   def handle_event("pick-date", %{"date" => date}, socket) do
     {:noreply, assign(socket, :selected_date, Date.from_iso8601!(date))}
+  end
+
+  def handle_info({:updated, %Receiver{group: group}}, socket) do
+    {:noreply, assign(socket, group: group, count: count_subscribers(group))}
+  end
+
+  defp count_subscribers(group) do
+    IO.inspect(group, label: "##########")
+    1
   end
 
   defp selected_date?(day, selected_date), do: day == selected_date

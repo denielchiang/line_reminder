@@ -39,7 +39,7 @@ defmodule LineReminder.QrcodeHelper do
     "#{LineReminderWeb.Endpoint.url()}/subscribe/#{group}"
   end
 
-  @spec gen_qr_code(String.t()) :: String.t() | {:error, String.t()}
+  @spec gen_qr_code(String.t()) :: {:ok, {String.t(), String.t()}} | {:error, String.t()}
   defp gen_qr_code(url) do
     svg_settings =
       %SvgSettings{
@@ -53,7 +53,7 @@ defmodule LineReminder.QrcodeHelper do
     |> prepend_base64_preifx()
     |> case do
       {:ok, image} ->
-        image
+        {:ok, {image, url}}
 
       {:error, _reason} ->
         {:error, "QR Code generation failed!"}

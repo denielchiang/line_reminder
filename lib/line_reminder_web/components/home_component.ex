@@ -62,14 +62,14 @@ defmodule LineReminderWeb.HomeComponent do
         </div>
         <div class="flex-1 -ml-12 -mt-8 p-8 sticky lg:top-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden ">
           <div class="carousel carousel-center max-w-md p-4 space-x-4 rounded-box">
-            <%= for {lead, qrcode} <- @qrcodes do %>
+            <%= for {lead, {qr_image, qr_url}} <- @qrcodes do %>
               <div class="carousel-item">
                 <div class="mockup-phone shadow-lg">
                   <div class="camera"></div>
                   <div class="display">
                     <div class="artboard artboard-demo phone-1">
-                      <img src={qrcode} class="rounded-box w-5/6 bg-gray-900" alt={lead} />
-                      <lead><%= lead %></lead>
+                      <img src={qr_image} class="rounded-box w-5/6 bg-gray-900" alt={lead} />
+                      <lead><a href={qr_url}><%= lead %></a></lead>
                     </div>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ defmodule LineReminderWeb.HomeComponent do
   end
 
   def mount(socket) do
-    qrcodes = QrcodeHelper.gen_qrcodes()
+    qrcodes = QrcodeHelper.gen_qrcodes() |> Enum.map(fn {:ok, qrcode_info} -> qrcode_info end)
     groups = QrcodeHelper.get_groups() |> Enum.map(&append_wording/1)
     qrcode_map = Enum.zip(groups, qrcodes) |> Map.new() |> Enum.reverse()
 
