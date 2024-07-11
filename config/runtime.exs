@@ -61,6 +61,7 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port
     ],
+    check_origin: ["//alertime.room3327.net", "//alertime-app.fly.dev"],
     secret_key_base: secret_key_base
 
   config :line_reminder,
