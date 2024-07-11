@@ -24,6 +24,7 @@ defmodule LineReminderWeb.CalendarComponent do
             <div class="badge badge-outline"><%= gettext("General") %></div>
             <div class="badge badge-primary badge-outline"><%= gettext("Advanced") %></div>
             <div class="badge badge-secondary badge-outline"><%= gettext("Companion") %></div>
+            <div class="badge badge-accent badge-outline"><%= gettext("Companion2H") %></div>
           </div>
           <div class="buttons">
             <button type="button" phx-target={@myself} phx-click="prev-month" class="p-1">
@@ -117,11 +118,13 @@ defmodule LineReminderWeb.CalendarComponent do
                 <div class="flex flex-col h-40 w-full overflow-hidden">
                   <div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
                     <!-- companion progress  -->
-                    <.event_badge badge={day.event[:companion]} type={:companion} />
+                    <p><.event_badge badge={day.event[:companion]} type={:companion} /></p>
                     <!-- general progress  -->
-                    <.event_badge badge={day.event[:general]} type={:general} />
+                    <p><.event_badge badge={day.event[:general]} type={:general} /></p>
                     <!-- advanced progress  -->
-                    <.event_badge badge={day.event[:advanced]} type={:advanced} />
+                    <p><.event_badge badge={day.event[:advanced]} type={:advanced} /></p>
+                    <!-- companion2H progress  -->
+                    <p><.event_badge badge={day.event[:companion2H]} type={:companion2H} /></p>
                   </div>
                 </div>
               </td>
@@ -169,6 +172,14 @@ defmodule LineReminderWeb.CalendarComponent do
     ~H"""
     <%= for ch <- maybe_multi_chps(assigns[:badge]) do %>
       <div class="badge badge-secondary badge-outline"><%= ch %></div>
+    <% end %>
+    """
+  end
+
+  def event_badge(%{type: :companion2H} = assigns) do
+    ~H"""
+    <%= for ch <- maybe_multi_chps(assigns[:badge]) do %>
+      <div class="badge badge-accent badge-outline"><%= ch %></div>
     <% end %>
     """
   end
