@@ -131,8 +131,8 @@ defmodule LineReminderWeb.CalendarComponent do
                     <p><.event_badge badge={day.event[:general]} type={:general} /></p>
                     <!-- advanced progress  -->
                     <p><.event_badge badge={day.event[:advanced]} type={:advanced} /></p>
-                    <!-- companion2H progress  -->
-                    <p><.event_badge badge={day.event[:companion2H]} type={:companion2H} /></p>
+                    <!-- companion2h progress  -->
+                    <p><.event_badge badge={day.event[:companion2h]} type={:companion2h} /></p>
                   </div>
                 </div>
               </td>
@@ -184,7 +184,7 @@ defmodule LineReminderWeb.CalendarComponent do
     """
   end
 
-  def event_badge(%{type: :companion2H} = assigns) do
+  def event_badge(%{type: :companion2h} = assigns) do
     ~H"""
     <%= for ch <- maybe_multi_chps(assigns[:badge]) do %>
       <div class="badge badge-accent badge-outline"><%= ch %></div>

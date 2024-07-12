@@ -48,17 +48,17 @@ export const HeroJS = {
             }, intervalMSec);
         }
 
-        // companion 2H program animation
-        let companion2HCount = document.getElementById('companion2H-count');
-        let com2HCount = 0;
-        let targetCom2HCount = parseInt(companion2HCount.textContent);
+        // companion 2h program animation
+        let companion2hCount = document.getElementById('companion2h-count');
+        let com2hCount = 0;
+        let targetCom2hCount = parseInt(companion2hCount.textContent);
 
-        if (targetCom2HCount > 0) {
-            let intervalCom2HId = setInterval(function() {
-                com2HCount++;
-                companion2HCount.textContent = com2HCount;
-                if (com2HCount === targetCom2HCount) {
-                    clearInterval(intervalCom2HId);
+        if (targetCom2hCount > 0) {
+            let intervalCom2hId = setInterval(function() {
+                com2hCount++;
+                companion2hCount.textContent = com2hCount;
+                if (com2hCount === targetCom2hCount) {
+                    clearInterval(intervalCom2hId);
                 }
             }, intervalMSec);
         }

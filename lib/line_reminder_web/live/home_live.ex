@@ -6,7 +6,7 @@ defmodule LineReminderWeb.HomeLive do
   alias LineReminderWeb.HomeComponent
 
   def mount(_params, _session, socket) do
-    %{general: g_cnt, advanced: a_cnt, companion: c_cnt, companion2H: c2h_cnt} =
+    %{general: g_cnt, advanced: a_cnt, companion: c_cnt, companion2h: c2h_cnt} =
       Receivers.count_receiver_groups()
 
     socket =
@@ -14,7 +14,7 @@ defmodule LineReminderWeb.HomeLive do
       |> assign(:general_count, g_cnt)
       |> assign(:advanced_count, a_cnt)
       |> assign(:companion_count, c_cnt)
-      |> assign(:companion2H_count, c2h_cnt)
+      |> assign(:companion2h_count, c2h_cnt)
 
     {:ok, socket}
   end
@@ -27,7 +27,7 @@ defmodule LineReminderWeb.HomeLive do
       general_count={@general_count}
       advanced_count={@advanced_count}
       companion_count={@companion_count}
-      companion2H_count={@companion2H_count}
+      companion2h_count={@companion2h_count}
     />
     <.live_component module={HomeComponent} id="home" />
     """
