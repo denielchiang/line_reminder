@@ -23,7 +23,10 @@ defmodule LineReminder.ExcelHelperTest do
         %{name: "Chapter6", date: ~N[2023-05-06 00:00:00], group: 2},
         %{name: "Chapter7", date: ~N[2023-05-07 00:00:00], group: 3},
         %{name: "Chapter8", date: ~N[2023-05-08 00:00:00], group: 3},
-        %{name: "Chapter9", date: ~N[2023-05-09 00:00:00], group: 3}
+        %{name: "Chapter9", date: ~N[2023-05-09 00:00:00], group: 3},
+        %{name: "Chapter17", date: ~N[2023-06-07 00:00:00], group: 4},
+        %{name: "Chapter18", date: ~N[2023-06-13 00:00:00], group: 4},
+        %{name: "Chapter19", date: ~N[2023-06-07 00:00:00], group: 4}
       ]
 
       assert ExcelHelper.import_all(test_file_path) == expected_output
