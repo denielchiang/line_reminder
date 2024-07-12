@@ -28,10 +28,10 @@ defmodule LineReminderWeb.SubscribeController do
   defp companion_client_secret, do: Application.get_env(:line_reminder, :companion_client_secret)
 
   # Line bot credential for companion 2h notifier
-  defp companion2H_client_id, do: Application.get_env(:line_reminder, :companion2H_client_id)
+  defp companion2h_client_id, do: Application.get_env(:line_reminder, :companion2h_client_id)
 
-  defp companion2H_client_secret,
-    do: Application.get_env(:line_reminder, :companion2H_client_secret)
+  defp companion2h_client_secret,
+    do: Application.get_env(:line_reminder, :companion2h_client_secret)
 
   def request(conn, %{"program" => program}) do
     code_req_uri =
@@ -105,10 +105,10 @@ defmodule LineReminderWeb.SubscribeController do
   defp get_client_id("general"), do: general_client_id()
   defp get_client_id("advanced"), do: advanced_client_id()
   defp get_client_id("companion"), do: companion_client_id()
-  defp get_client_id("companion2H"), do: companion2H_client_id()
+  defp get_client_id("companion2H"), do: companion2h_client_id()
 
   defp get_client_secret("general"), do: general_client_secret()
   defp get_client_secret("advanced"), do: advanced_client_secret()
   defp get_client_secret("companion"), do: companion_client_secret()
-  defp get_client_secret("companion2H"), do: companion2H_client_secret()
+  defp get_client_secret("companion2H"), do: companion2h_client_secret()
 end

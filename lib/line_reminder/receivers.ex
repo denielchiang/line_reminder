@@ -13,7 +13,7 @@ defmodule LineReminder.Receivers do
   @general_code 1
   @advanced_code 2
   @companion_code 3
-  @companion2H_code 4
+  @companion2h_code 4
 
   @doc """
   Reture corresponding prgoram code in database
@@ -30,7 +30,7 @@ defmodule LineReminder.Receivers do
       "general" -> @general_code
       "advanced" -> @advanced_code
       "companion" -> @companion_code
-      "companion2H" -> @companion2H_code
+      "companion2h" -> @companion2h_code
     end
   end
 
@@ -50,7 +50,7 @@ defmodule LineReminder.Receivers do
 
   @doc """
   Returns count each group of receivers. It ALWAYS has key `general`, `advanced`
-  `companion` and `companion2H`. even the count is 0.
+  `companion` and `companion2h`. even the count is 0.
 
   ## Examples
 
@@ -66,7 +66,7 @@ defmodule LineReminder.Receivers do
         order_by: r.group,
         select: {r.group, count()}
 
-    base = [general: 0, advanced: 0, companion: 0, companion2H: 0] |> Enum.into(%{})
+    base = [general: 0, advanced: 0, companion: 0, companion2h: 0] |> Enum.into(%{})
 
     Repo.all(query)
     |> Enum.into(%{})

@@ -246,8 +246,7 @@ defmodule LineReminderWeb.CalendarComponent do
     {:noreply, assign(socket, group: group, count: count_subscribers(group))}
   end
 
-  defp count_subscribers(group) do
-    IO.inspect(group, label: "##########")
+  defp count_subscribers(_group) do
     1
   end
 
