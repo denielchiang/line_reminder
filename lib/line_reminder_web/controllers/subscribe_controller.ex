@@ -98,17 +98,17 @@ defmodule LineReminderWeb.SubscribeController do
     "#{uri}?response_type=#{@response_type}&client_id=#{companion_client_id()}&scope=#{@scope}&state=#{get_csrf_token()}&redirect_uri=#{url(~p"/subscribe/companion/callback")}"
   end
 
-  defp append_code_req(uri, "companion2H") do
-    "#{uri}?response_type=#{@response_type}&client_id=#{companion_client_id()}&scope=#{@scope}&state=#{get_csrf_token()}&redirect_uri=#{url(~p"/subscribe/companion2H/callback")}"
+  defp append_code_req(uri, "companion2h") do
+    "#{uri}?response_type=#{@response_type}&client_id=#{companion_client_id()}&scope=#{@scope}&state=#{get_csrf_token()}&redirect_uri=#{url(~p"/subscribe/companion2h/callback")}"
   end
 
   defp get_client_id("general"), do: general_client_id()
   defp get_client_id("advanced"), do: advanced_client_id()
   defp get_client_id("companion"), do: companion_client_id()
-  defp get_client_id("companion2H"), do: companion2h_client_id()
+  defp get_client_id("companion2h"), do: companion2h_client_id()
 
   defp get_client_secret("general"), do: general_client_secret()
   defp get_client_secret("advanced"), do: advanced_client_secret()
   defp get_client_secret("companion"), do: companion_client_secret()
-  defp get_client_secret("companion2H"), do: companion2h_client_secret()
+  defp get_client_secret("companion2h"), do: companion2h_client_secret()
 end

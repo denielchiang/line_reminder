@@ -10,7 +10,7 @@ defmodule LineReminder.Notifiers.Event do
   schema "events" do
     field :date, :date
     field :name, :string
-    field :group, Ecto.Enum, values: [general: 1, advanced: 2, companion: 3, companion2H: 4]
+    field :group, Ecto.Enum, values: [general: 1, advanced: 2, companion: 3, companion2h: 4]
 
     timestamps()
   end

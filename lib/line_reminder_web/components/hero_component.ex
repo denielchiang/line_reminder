@@ -94,10 +94,10 @@ defmodule LineReminderWeb.HeroComponent do
                 <%= gettext("2nd Helf Plan Subscribers") %>
               </dt>
               <dd
-                id="companion2H-count"
+                id="companion2h-count"
                 class="text-2xl font-bold leading-9 tracking-tight text-white font-comfortaa"
               >
-                <%= @companion2H_count %>
+                <%= @companion2h_count %>
               </dd>
             </div>
           </dl>

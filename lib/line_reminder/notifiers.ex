@@ -8,33 +8,33 @@ defmodule LineReminder.Notifiers do
   alias LineReminder.Events
 
   @typedoc """
-  A map representing events, with optional keys `:general`, `:advanced`, `:companion` and `:companion2H`,
+  A map representing events, with optional keys `:general`, `:advanced`, `:companion` and `:companion2h`,
   where the values are lists of strings (representing module names).
   """
   @type event_map :: %{
           optional(:general) => list(String.t()),
           optional(:advanced) => list(String.t()),
           optional(:companion) => list(String.t()),
-          optional(:companion2H) => list(String.t())
+          optional(:companion2h) => list(String.t())
         }
 
   @typedoc """
-  A map representing progress messages, with optional keys `:general`, `:advanced`, `:companion` and `:companion2H`,
+  A map representing progress messages, with optional keys `:general`, `:advanced`, `:companion` and `:companion2h`,
   where the values are lists of strings (representing messages).
   """
   @type progress_map :: %{
           optional(:general) => list(String.t()),
           optional(:advanced) => list(String.t()),
           optional(:companion) => list(String.t()),
-          optional(:companion2H) => list(String.t())
+          optional(:companion2h) => list(String.t())
         }
 
   @typedoc """
-  A map representing a receiver, with keys `:group` (one of `:general`, `:advanced`, `:companion` or `:companion2H`)
+  A map representing a receiver, with keys `:group` (one of `:general`, `:advanced`, `:companion` or `:companion2h`)
   and `:token` (a string representing the token).
   """
   @type receiver :: %{
-          group: :general | :advanced | :companion | :companion2H,
+          group: :general | :advanced | :companion | :companion2h,
           token: String.t()
         }
 
@@ -47,7 +47,7 @@ defmodule LineReminder.Notifiers do
 
   ## Returns
 
-  - An `event_map` containing the events grouped by group (`:general`, `:advanced`, `:companion`, `companion2H`).
+  - An `event_map` containing the events grouped by group (`:general`, `:advanced`, `:companion`, `companion2h`).
   """
   @spec get_events(Date.t()) :: event_map()
   def get_events(date) when is_struct(date, Date) do
@@ -91,7 +91,7 @@ defmodule LineReminder.Notifiers do
   defp choose_msg(%{group: :companion, token: token}, %{companion: msgs}) when is_list(msgs),
     do: Enum.map(msgs, &%{msg: &1, token: token})
 
-  defp choose_msg(%{group: :companion2H, token: token}, %{companion2H: msgs}) when is_list(msgs),
+  defp choose_msg(%{group: :companion2h, token: token}, %{companion2h: msgs}) when is_list(msgs),
     do: Enum.map(msgs, &%{msg: &1, token: token})
 
   defp choose_msg(_receiver, _msg_code), do: nil

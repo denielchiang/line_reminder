@@ -39,7 +39,7 @@ defmodule LineReminder.Sns.Line do
   defp choose_msg("general"), do: "\n您已訂閱[一般組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
   defp choose_msg("advanced"), do: "\n您已訂閱[速讀組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
   defp choose_msg("companion"), do: "\n您已訂閱[陪讀組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
-  defp choose_msg("companion2H"), do: "\n您已訂閱[陪讀半年組組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
+  defp choose_msg("companion2h"), do: "\n您已訂閱[陪讀半年組組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
 
   # https://developers.line.biz/en/docs/messaging-api/sticker-list/#sticker-definitions
   @progress_sticker_package [
