@@ -39,8 +39,25 @@ defmodule LineReminder.Sns.Line do
   defp choose_msg("general"), do: "\n您已訂閱[一般組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
   defp choose_msg("advanced"), do: "\n您已訂閱[速讀組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
   defp choose_msg("companion"), do: "\n您已訂閱[陪讀組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
+  defp choose_msg("companion2H"), do: "\n您已訂閱[陪讀半年組組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
 
-  @progress_sticker_package 11_537
+  # https://developers.line.biz/en/docs/messaging-api/sticker-list/#sticker-definitions
+  @progress_sticker_package [
+    52_002_768,
+    52_002_764,
+    52_002_752,
+    52_002_745,
+    52_002_735,
+    52_002_738,
+    52_002_739,
+    52_002_748
+  ]
+
+  defp get_daliy_sticker() do
+    @progress_sticker_package
+    |> Enum.random()
+  end
+
   @progress_sticker_id 52_002_768
 
   @doc """
@@ -61,7 +78,7 @@ defmodule LineReminder.Sns.Line do
   @impl true
   def send_progress(msg, token) do
     %{
-      stickerPackageId: @progress_sticker_package,
+      stickerPackageId: get_daliy_sticker(),
       stickerId: @progress_sticker_id,
       message: msg
     }

@@ -73,7 +73,9 @@ if config_env() == :prod do
     advanced_client_id: System.get_env("ADVANCED_CLIENT_ID"),
     advanced_client_secret: System.get_env("ADVANCED_CLIENT_SECRET"),
     companion_client_id: System.get_env("COMPANION_CLIENT_ID"),
-    companion_client_secret: System.get_env("COMPANION_CLIENT_SECRET")
+    companion_client_secret: System.get_env("COMPANION_CLIENT_SECRET"),
+    companion2H_client_id: System.get_env("COMPANION_2H_CLIENT_ID"),
+    companion2H_client_secret: System.get_env("COMPANION_2H_CLIENT_SECRET")
 
   config :line_reminder, LineReminder.Scheduler,
     timezone: "Asia/Taipei",

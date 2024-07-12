@@ -15,7 +15,7 @@ defmodule LineReminderWeb.CalendarComponent do
   def render(assigns) do
     ~H"""
     <div class="container mx-auto mt-10">
-      <div class="wrapper bg-white rounded shadow w-full ">
+      <div class="wrapper dark:bg-black bg-white rounded shadow w-full ">
         <div class="header flex justify-between border p-2">
           <span class="text-lg font-bold">
             <%= Calendar.strftime(@current_date, "%B %Y") %>
@@ -98,10 +98,9 @@ defmodule LineReminderWeb.CalendarComponent do
               <td
                 :for={day <- week}
                 class={[
-                  today?(day.date) && "bg-lime-100",
-                  other_month?(day.date, @current_date) && "bg-gray-100",
+                  other_month?(day.date, @current_date) && "dark:bg-gray-600 bg-gray-100",
                   selected_date?(day.date, @selected_date) && "bg-blue-100",
-                  "align-top border p-1 h-30 xl:w-40 lg:w-20 md:w-20 sm:w-20 w-20 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300"
+                  "align-top border p-1 h-30 xl:w-40 lg:w-20 md:w-20 sm:w-20 w-20 overflow-auto transition cursor-pointer duration-500 ease dark:hover:bg-gray-800 hover:bg-gray-100"
                 ]}
               >
                 <button
@@ -111,11 +110,20 @@ defmodule LineReminderWeb.CalendarComponent do
                   phx-value-date={Calendar.strftime(day.date, "%Y-%m-%d")}
                 >
                   <time datetime={Calendar.strftime(day.date, "%Y-%m-%d")}>
-                    <%= Calendar.strftime(day.date, "%d") %>
+                    <%= if today?(day.date) do %>
+                      <div class="flex items-center justify-center w-8 h-8 bg-red-500 text-white text-lg font-bold rounded-full">
+                        <%= Calendar.strftime(day.date, "%d") %>
+                      </div>
+                    <% else %>
+                      <%= Calendar.strftime(day.date, "%d") %>
+                    <% end %>
                   </time>
                 </button>
 
-                <div class="flex flex-col h-40 w-full overflow-hidden">
+                <div class={[
+                  today?(day.date) && "dark:animate-bounce",
+                  "flex flex-col h-full w-full overflow-hidden"
+                ]}>
                   <div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
                     <!-- companion progress  -->
                     <p><.event_badge badge={day.event[:companion]} type={:companion} /></p>

@@ -191,4 +191,5 @@ defmodule LineReminderWeb.HomeComponent do
   defp append_wording("general"), do: gettext("General Program")
   defp append_wording("advanced"), do: gettext("Advanced Program")
   defp append_wording("companion"), do: gettext("Companion Program")
+  defp append_wording("companion2H"), do: gettext("Companion 2nd Half Program")
 end

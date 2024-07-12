@@ -13,7 +13,7 @@ defmodule LineReminder.QrcodeHelper do
   """
   alias QRCode.Render.SvgSettings
 
-  @groups ["general", "advanced", "companion"]
+  @groups ["general", "advanced", "companion", "companion2H"]
   @qrcode_color {79, 70, 229}
   @prepend_header "data:image/svg+xml;base64,"
 
@@ -30,7 +30,8 @@ defmodule LineReminder.QrcodeHelper do
     |> gen_qr_code()
   end
 
-  def gen_qrcode(_group), do: {:error, "Parameter can be only [general, advanced, companion]"}
+  def gen_qrcode(_group),
+    do: {:error, "Parameter can be only [general, advanced, companion, companion2H]"}
 
   def get_groups(), do: @groups
 
