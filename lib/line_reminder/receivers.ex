@@ -13,6 +13,7 @@ defmodule LineReminder.Receivers do
   @general_code 1
   @advanced_code 2
   @companion_code 3
+  @companion2h_code 4
 
   @doc """
   Reture corresponding prgoram code in database
@@ -29,6 +30,7 @@ defmodule LineReminder.Receivers do
       "general" -> @general_code
       "advanced" -> @advanced_code
       "companion" -> @companion_code
+      "companion2h" -> @companion2h_code
     end
   end
 
@@ -48,12 +50,12 @@ defmodule LineReminder.Receivers do
 
   @doc """
   Returns count each group of receivers. It ALWAYS has key `general`, `advanced`
-  and `companion`. even the count is 0.
+  `companion` and `companion2h`. even the count is 0.
 
   ## Examples
 
       iex> count_receiver_groups()
-      %{general: 3, advanced: 0, companion: 1}
+      %{general: 3, advanced: 0, companion: 1, companion: 3}
 
   """
   @spec count_receiver_groups() :: map
@@ -64,7 +66,7 @@ defmodule LineReminder.Receivers do
         order_by: r.group,
         select: {r.group, count()}
 
-    base = [general: 0, advanced: 0, companion: 0] |> Enum.into(%{})
+    base = [general: 0, advanced: 0, companion: 0, companion2h: 0] |> Enum.into(%{})
 
     Repo.all(query)
     |> Enum.into(%{})
@@ -140,7 +142,20 @@ defmodule LineReminder.Receivers do
     %Receiver{}
     |> Receiver.changeset(attrs)
     |> Repo.insert()
+    |> broadcast_subscriber_count()
   end
+
+  defp broadcast_subscriber_count({:ok, %Receiver{} = receiver}) do
+    Phoenix.PubSub.broadcast(
+      LineReminder.PubSub,
+      "subscribers:#{receiver.group}",
+      {:updated, receiver}
+    )
+
+    {:ok, receiver}
+  end
+
+  defp broadcast_subscriber_count(error), do: error
 
   @doc """
   Updates a receiver.

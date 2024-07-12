@@ -47,5 +47,20 @@ export const HeroJS = {
                 }
             }, intervalMSec);
         }
+
+        // companion 2H program animation
+        let companion2HCount = document.getElementById('companion2H-count');
+        let com2HCount = 0;
+        let targetCom2HCount = parseInt(companion2HCount.textContent);
+
+        if (targetCom2HCount > 0) {
+            let intervalCom2HId = setInterval(function() {
+                com2HCount++;
+                companion2HCount.textContent = com2HCount;
+                if (com2HCount === targetCom2HCount) {
+                    clearInterval(intervalCom2HId);
+                }
+            }, intervalMSec);
+        }
     }
 }
