@@ -6,7 +6,6 @@ const fs = require("fs")
 const path = require("path")
 
 module.exports = {
-    darkMode: false, // Disable dark mode
     content: [
         "./js/**/*.js",
         "../lib/*_web.ex",

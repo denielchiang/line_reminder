@@ -1,11 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
-@font-face {
-  font-family: "Comfortaa";
-  src: url("/fonts/Comfortaa-VariableFont_wght.ttf") format("truetype");
-}
+@import "fonts";
 
 plasmo-csui {
   display: none !important;
