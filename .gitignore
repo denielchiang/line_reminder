@@ -37,8 +37,5 @@ npm-debug.log
 
 /lib/line_reminder/release.ex
 **/*.secret.exs
-/priv/static/
 /bin/
-/priv/plts/*.plt
-/priv/plts/*.plt.hash
 .DS_Store
