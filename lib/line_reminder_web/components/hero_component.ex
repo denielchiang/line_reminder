@@ -4,6 +4,11 @@ defmodule LineReminderWeb.HeroComponent do
   """
   use Phoenix.LiveComponent
 
+  use Phoenix.VerifiedRoutes,
+    endpoint: LineReminderWeb.Endpoint,
+    router: LineReminderWeb.Router,
+    statics: ~w(images)
+
   import LineReminderWeb.Gettext, only: [gettext: 1]
 
   def render(assigns) do
@@ -14,7 +19,7 @@ defmodule LineReminderWeb.HeroComponent do
       class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32"
     >
       <img
-        src="/images/bg.avif"
+        src={~p"/images/bg.avif"}
         alt=""
         class="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
       />
