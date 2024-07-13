@@ -26,7 +26,7 @@ config :esbuild,
   version: "0.17.11",
   default: [
     args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/images/*),
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
@@ -57,6 +57,11 @@ config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 config :line_reminder,
   notify_auth_uri: System.get_env("LINE_NOTIFY_AUTH_URI"),
   notify_auth_token: System.get_env("LINE_NOTIFY_TOKEN_URI")
+
+# Avif format serving
+config :mime, :types, %{
+  "image/avif" => ["avif"]
+}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
