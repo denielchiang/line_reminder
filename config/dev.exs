@@ -25,8 +25,7 @@ config :line_reminder, LineReminderWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "t487gUhtwUOoNX6tosuJpl3Yc3zG/Tkgvp0Awm3krstbv+H1yQsT5YNE1v5+G6uC",
   watchers: [
-    esbuild:
-      {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
