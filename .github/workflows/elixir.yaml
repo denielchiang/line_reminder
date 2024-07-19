@@ -45,13 +45,15 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Restore PLT cache
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@v3
       id: plt_cache
       with:
-        key: ${{ runner.os }}-plt-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock') }}
+        key: |
+            ${{ runner.os }}-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-plt
         restore-keys: |
-          ${{ runner.os }}-plt-${{ matrix.elixir }}-${{ matrix.otp }}
-        path: priv/plts
+          ${{ runner.os }}-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-plt
+        path: |
+          priv/plts
     
     - name: Clean to rule out incremental build as a source of flakiness
       if: github.run_attempt != '1'
@@ -75,8 +77,10 @@ jobs:
       if: steps.plt_cache.outputs.cache-hit != 'true'
       id: plt_cache_save
       with:
-        key: ${{ runner.os }}-plt-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock') }}
-        path: priv/plts
+        key: |
+          ${{ runner.os }}-${{ steps.beam.outputs.elixir-version }}-${{ steps.beam.outputs.otp-version }}-plt
+        path: |
+          priv/plts
 
     - name: Check Formatting
       run: mix format --check-formatted
