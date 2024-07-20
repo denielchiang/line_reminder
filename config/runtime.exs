@@ -82,7 +82,10 @@ if config_env() == :prod do
     overlap: false,
     run_strategy: Quantum.RunStrategy.Local,
     jobs: [
-      {"* 6 * * *", {LineReminder.Apostle, :send, []}}
+      bible_remind: [
+        schedule: {:cron, "0 5-23/3 * * 1-6"},
+        task: {LineReminder.Apostle, :send, []}
+      ]
     ]
 
   # ## SSL Support
