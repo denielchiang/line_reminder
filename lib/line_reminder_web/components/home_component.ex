@@ -174,6 +174,29 @@ defmodule LineReminderWeb.HomeComponent do
           </div>
         </div>
       </div>
+      <div class="bg-gray-900 hero bg-base-200 min-h-screen rounded-box">
+        <div class="hero-content text-center w-full">
+          <div class="w-full max-w-md bg-white bg-opacity-10 backdrop-blur p-6 rounded-lg shadow-lg mx-auto">
+            <h1 class="text-3xl font-bold text-white">
+              <%= gettext("Don't know how to subscribe from ") %>
+              <span class="text-lime-500"><%= gettext("Line?") %></span>
+            </h1>
+            <p class="py-6 leading-6 text-white">
+              Discover how easy it is to subscribe to our Bible reading progress reminders. In just 35 seconds, learn to set up daily alerts that keep you motivated and on schedule with your scripture study.
+            </p>
+            <div class="aspect-w-9 aspect-h-16 w-full rounded-lg overflow-hidden bg-white">
+              <iframe
+                src="https://player.vimeo.com/video/987618660?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="w-full h-full"
+              >
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     """
   end
