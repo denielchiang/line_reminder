@@ -83,7 +83,7 @@ if config_env() == :prod do
     run_strategy: Quantum.RunStrategy.Local,
     jobs: [
       bible_remind: [
-        schedule: {:cron, "0 5-23/3 * * *"},
+        schedule: {:cron, "0 5-23/3 * * 1-6"},
         task: {LineReminder.Apostle, :send, []}
       ]
     ]
