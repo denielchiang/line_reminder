@@ -41,25 +41,6 @@ defmodule LineReminder.Sns.Line do
   defp choose_msg("companion"), do: "\n您已訂閱[陪讀組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
   defp choose_msg("companion2h"), do: "\n您已訂閱[陪讀半年組組]讀經進度小幫手\n🚀🚀🚀🚀🚀🚀"
 
-  # https://developers.line.biz/en/docs/messaging-api/sticker-list/#sticker-definitions
-  @progress_sticker_package [
-    52_002_768,
-    52_002_764,
-    52_002_752,
-    52_002_745,
-    52_002_735,
-    52_002_738,
-    52_002_739,
-    52_002_748
-  ]
-
-  defp get_daliy_sticker() do
-    @progress_sticker_package
-    |> Enum.random()
-  end
-
-  @progress_sticker_id 52_002_768
-
   @doc """
   Sends a progress update message to a Line group.
 
@@ -77,11 +58,8 @@ defmodule LineReminder.Sns.Line do
   """
   @impl true
   def send_progress(msg, token) do
-    %{
-      stickerPackageId: get_daliy_sticker(),
-      stickerId: @progress_sticker_id,
-      message: msg
-    }
+    %{message: msg}
+    |> gen_req()
     |> send_to_group(token)
   end
 
@@ -97,7 +75,7 @@ defmodule LineReminder.Sns.Line do
       form: [
         stickerPackageId: request.stickerPackageId,
         stickerId: request.stickerId,
-        message: request.message
+        message: ~s(\n`#{request.message}`)
       ]
     )
     |> then(fn
@@ -111,5 +89,29 @@ defmodule LineReminder.Sns.Line do
       "ok" -> "Message sent successfully"
       other_body_message -> other_body_message
     end)
+  end
+
+  # https://developers.line.biz/en/docs/messaging-api/sticker-list/#sticker-definitions
+  @stickers [
+    %{package_id: 446, stickers: [1988, 1991, 2015]},
+    %{package_id: 789, stickers: [10_891, 10_863]},
+    %{
+      package_id: 6136,
+      stickers: [10_551_386, 10_551_381, 10_551_390, 10_551_393, 10_551_394, 10_551_395]
+    },
+    %{package_id: 6325, stickers: [10_979_907, 10_979_914, 10_979_915, 10_979_923, 10_979_922]},
+    %{package_id: 8525, stickers: [16_581_294, 16_581_296, 16_581_292, 16_581_305, 16_581_304]},
+    %{package_id: 11_537, stickers: [52_002_738, 52_002_735, 52_002_768, 52_002_764]}
+  ]
+
+  defp gen_req(%{message: msg} = req) do
+    %{package_id: package_id, stickers: sticker_ids} = Enum.random(@stickers)
+
+    %{
+      stickerPackageId: package_id,
+      stickerId: Enum.random(sticker_ids),
+      message: msg
+    }
+    |> Map.merge(req)
   end
 end
