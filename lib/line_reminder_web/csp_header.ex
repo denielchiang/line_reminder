@@ -13,7 +13,8 @@ defmodule LineReminderWeb.CSPHeader do
   defp csp(conn) do
     "default-src 'self'; \
     connect-src 'self' #{ws_url(conn)} #{ws_url(conn, "wss")}; \
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' #{cloudflare_insight_url()}; \
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' #{cloudflare_insight_url()} #{vimeo_url()}; \
+    frame-src 'self' 'unsafe-inline' 'unsafe-eval'  #{vimeo_url()}; \
     style-src 'self' 'unsafe-inline' 'unsafe-eval'; \
     font-src 'self' data:; \
     img-src 'self' data:;"
@@ -25,4 +26,5 @@ defmodule LineReminderWeb.CSPHeader do
   end
 
   defp cloudflare_insight_url(), do: "static.cloudflareinsights.com"
+  defp vimeo_url(), do: "player.vimeo.com"
 end
