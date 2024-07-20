@@ -5,8 +5,7 @@ defmodule LineReminder.Receivers do
 
   import Ecto.Query, warn: false
 
-  alias LineReminder.Repo
-  alias LineReminder.Notifiers.Receiver
+  alias LineReminder.{Repo, Notifiers.Receiver}
 
   @type receiver :: %LineReminder.Notifiers.Receiver{}
 
@@ -16,7 +15,7 @@ defmodule LineReminder.Receivers do
   @companion2h_code 4
 
   @doc """
-  Reture corresponding prgoram code in database
+  Return corresponding prgoram code in database
 
   ## Examples
 

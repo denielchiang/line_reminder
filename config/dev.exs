@@ -84,10 +84,18 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 # Only for testing on local, comment this after testing
-# config :line_reminder, LineReminder.Scheduler,
-#  jobs: [
-#    {"*/1 * * * *", {LineReminder.Messanger, :send, []}}
-#  ]
+config :line_reminder, LineReminder.Scheduler,
+  debug_logging: true,
+  timezone: "Asia/Taipei",
+  overlap: false,
+  run_strategy: Quantum.RunStrategy.Local,
+  jobs: [
+    bible_remind: [
+      state: :inactive,
+      schedule: {:cron, "* * * * *"},
+      task: {LineReminder.Apostle, :send, []}
+    ]
+  ]
 
 # To avoid breaks when running without file "config/dev.secret.exs"
 if File.exists?("config/dev.secret.exs") do
