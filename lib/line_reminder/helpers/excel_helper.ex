@@ -19,6 +19,8 @@ defmodule LineReminder.ExcelHelper do
   """
   require Logger
 
+  alias LineReminder.DateHelper
+
   @typedoc """
   A map representing the sheet types and their corresponding integer values.
   """
@@ -84,6 +86,7 @@ defmodule LineReminder.ExcelHelper do
       |> Stream.flat_map(& &1)
       |> Stream.chunk_every(2)
       |> Enum.to_list()
+      |> Enum.filter(&remain_tomorrow/1)
       |> Enum.map(&build_map(&1, group))
     else
       {:error, reason} ->
@@ -91,6 +94,8 @@ defmodule LineReminder.ExcelHelper do
         {:error, reason}
     end
   end
+
+  def remain_tomorrow([date, _chapter]), do: DateHelper.date_after_today?(date)
 
   def build_map([date, chapter], group) do
     %{
@@ -119,7 +124,7 @@ defmodule LineReminder.ExcelHelper do
     end
   end
 
-  @invalid_nil_count 24
+  @invalid_nil_count 26
   defp incorrect_nil_counts({_row, count}), do: count == @invalid_nil_count
 
   defp valuable_data?({row, _count}), do: Enum.any?(row, &naive?/1)
