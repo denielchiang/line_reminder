@@ -3,8 +3,7 @@ defmodule LineReminderWeb.CalendarComponent do
   Provides Calendar UI components.
   """
   use Phoenix.LiveComponent
-
-  import LineReminderWeb.Gettext, only: [gettext: 1]
+  use Gettext, backend: LineReminderWeb.Gettext
 
   alias LineReminder.Notifiers.Receiver
   alias LineReminder.Notifiers

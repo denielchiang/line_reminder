@@ -12,6 +12,9 @@
 alias LineReminder.Repo
 alias LineReminder.Events
 alias LineReminder.ExcelHelper
+alias LineReminder.Events.Event
+
+Repo.delete_all(Event)
 
 unless Events.has_events_with_2024?() do
   events =
