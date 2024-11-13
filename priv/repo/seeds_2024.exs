@@ -12,7 +12,7 @@
 alias LineReminder.Repo
 alias LineReminder.Events
 alias LineReminder.ExcelHelper
-alias LineReminder.Events.Event
+alias LineReminder.Notifiers.Event
 
 Repo.delete_all(Event)
 
