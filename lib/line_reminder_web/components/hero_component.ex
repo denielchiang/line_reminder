@@ -3,8 +3,7 @@ defmodule LineReminderWeb.HeroComponent do
   Provides Hero UI components.
   """
   use Phoenix.LiveComponent
-
-  import LineReminderWeb.Gettext, only: [gettext: 1]
+  use Gettext, backend: LineReminderWeb.Gettext
 
   def render(assigns) do
     ~H"""

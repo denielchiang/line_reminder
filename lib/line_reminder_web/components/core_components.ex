@@ -17,7 +17,7 @@ defmodule LineReminderWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import LineReminderWeb.Gettext
+  use Gettext, backend: LineReminderWeb.Gettext
 
   @doc """
   Renders a modal.

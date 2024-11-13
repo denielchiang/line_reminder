@@ -43,7 +43,7 @@ defmodule LineReminderWeb do
         layouts: [html: LineReminderWeb.Layouts]
 
       import Plug.Conn
-      import LineReminderWeb.Gettext
+      use Gettext, backend: LineReminderWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -85,7 +85,7 @@ defmodule LineReminderWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import LineReminderWeb.CoreComponents
-      import LineReminderWeb.Gettext
+      use Gettext, backend: LineReminderWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
