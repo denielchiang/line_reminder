@@ -1,3 +1,12 @@
+# 🚀 Archived Repository Notice
+
+**Status:** Archived  
+**Date:** 2025-02-06
+
+This repository has been archived due to the discontinuation of [Line Notify](https://notify-bot.line.me/closing-announce). No further updates, bug fixes, or feature requests will be accepted. Please use this repository for historical reference only.
+
+---
+
 # LineReminder
 [![Run Tests](https://github.com/denielchiang/line_reminder/actions/workflows/elixir.yaml/badge.svg)](https://github.com/denielchiang/line_reminder/actions/workflows/elixir.yaml) [![Fly Deploy](https://github.com/denielchiang/line_reminder/actions/workflows/fly.yaml/badge.svg)](https://github.com/denielchiang/line_reminder/actions/workflows/fly.yaml)
 
